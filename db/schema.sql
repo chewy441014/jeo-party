@@ -1,0 +1,2 @@
+-- CREATE DATABASE
+CREATE DATABASE jeo_party_db;
