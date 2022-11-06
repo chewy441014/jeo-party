@@ -4,7 +4,7 @@
 Play jeopardy with friends!
 
 ## Installation
-
+  <!-- example -->
 1. Open VS Code Terminal
 2. Enter `npm i` into the command line
 3. Run `mysql -u root -p`
@@ -28,13 +28,16 @@ With more time we plan to:
 
 ## Credits
 
-- referenced past course work and material
-- installed npm packages 
-    - node.js
-    - Inquirer
-    - mysql2
-    - express
-    - console.table
+- Referenced past course work and material
+- Installed npm packages 
+  - node.js
+  - Inquirer
+  - mysql2
+  - express
+  - console.table
+- Utilized Google Docs to plan project
+- Utilized Figma to draw out wireframe for project
+- Kaggle supplied the questions data
 
 ## License
 
