@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS jeopardy_db;
+CREATE DATABASE jeopardy_db;
