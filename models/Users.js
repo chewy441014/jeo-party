@@ -32,4 +32,4 @@ User.init(
   }
 );
 
-module.exports = Painting;
+module.exports = User;
