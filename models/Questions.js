@@ -12,11 +12,11 @@ Question.init(
       autoIncrement: true,
     },
     category: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: "category",
-        key: "cat_name"
+        key: "id"
       }
     },
     description: {

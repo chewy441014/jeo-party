@@ -14,11 +14,11 @@ Score.init(
     score: {
         type: DataTypes.INTEGER
     },
-    username: {
-      type: DataTypes.STRING,
+    user: {
+      type: DataTypes.INTEGER,
       references: {
         model: "user",
-        key: "username"
+        key: "id"
       }
     },
   },

@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { UUIDV4, Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Game extends Model {}
@@ -20,12 +20,8 @@ Game.init(
       allowNull: false,
     },
     game_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "gameID",
-            key: "game_id"
-        }
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
     }
   },
   {
