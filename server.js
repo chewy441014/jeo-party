@@ -5,6 +5,7 @@ const routes = require('./controllers');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const socketio = require('socket.io');
+const helpers = require('./utils/gameHelpers');
 
 const sequelize = require('./config/connection');
 const app = express();
