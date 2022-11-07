@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS jeopardy_db;
-CREATE DATABASE jeopardy_db;
+DROP DATABASE IF EXISTS jeo_party_db;
+CREATE DATABASE jeo_party_db;
