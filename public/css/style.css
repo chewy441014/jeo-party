@@ -1,0 +1,13 @@
+
+.custom-card-size {
+    width: 8rem;
+    height: 8rem;
+}
+
+.game-board {
+    width: 70%;
+}
+
+.interactive-column {
+    width: 18rem;
+}
