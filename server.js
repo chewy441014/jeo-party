@@ -14,11 +14,24 @@ const pubDirectPath = path.join(__dirname, './public');
 
 const PORT = process.env.PORT || 3001;
 
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
 app.use(express.json());
 app.use(express.static(pubDirectPath));
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
+io.on('connection', (socket) => {
+  console.log('a user connected:', socket.id);
+
+  socket.on('')
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
+
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+  server.listen(PORT, () => console.log('Now listening'));
 });
