@@ -1,4 +1,4 @@
-// coppied from classwork- will need alerations 
+// handle logout and button presses and the logout button response
 
 
 const logout = async () => {

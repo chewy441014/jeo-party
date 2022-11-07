@@ -1,4 +1,4 @@
-// coppied from classwork- will need alerations 
+// handle login and button presses on the login page
 
 const loginFormHandler = async (event) => {
   event.preventDefault();
