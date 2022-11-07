@@ -1,2 +1,2 @@
--- CREATE DATABASE
+DROP DATABASE IF EXISTS jeo_party_db;
 CREATE DATABASE jeo_party_db;

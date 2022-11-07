@@ -1,3 +1,7 @@
+#Files
+.env
+DS_Store
+
 # Logs
 logs
 *.log
