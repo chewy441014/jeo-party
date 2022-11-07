@@ -14,7 +14,7 @@ Score.init(
     score: {
         type: DataTypes.INTEGER
     },
-    user: {
+    userID: {
       type: DataTypes.INTEGER,
       references: {
         model: "user",
