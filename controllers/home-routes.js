@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Home, User , Score} = require('../models');
+const { Home, User , Score, Question, GameState, Game} = require('../models');
 //const withAuth = require('../utils/auth');
 
 //Homepage route
@@ -15,9 +15,10 @@ router.get('/', async (req, res) => {
 
  //TODO - potentially update later
 router.get('/game', async (req, res) => {
+  
 
     res.render('game');
-});
+    });
 
 //high-scores home route  -- update top High Scores-- top 5 TODO
 router.get('/high-scores', async (req, res) => {
