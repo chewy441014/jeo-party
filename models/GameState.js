@@ -9,7 +9,6 @@ GameState.init({
         defaultValue: UUIDV4,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
     },
     question_id: {
         type: DataTypes.INTEGER,
