@@ -18,7 +18,11 @@
             <li><a class="Nav_Links" href="#Home">Home</a></li>
             <li><a class="Nav_Links" href="#highScores">High Scores</a></li>
             <li><a class="Nav_Links" href="#id">Current Game ID:</a></li>
-            <li><a class="Nav_Links" href="#login/logout">Log In</a></li>
+            {{#if loggedIn}}
+            <li><a class="Nav_Links" id="logout">Logout</a></li>
+            {{else}}
+            <li><a class="Nav_Links" href="/login">Log In</a></li>
+            {{/if}}
             <li><a class="Nav_Links" href="#user">Current User</a></li>
         </ul>
     </div>
@@ -28,6 +32,9 @@
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"></script>
+    {{#if loggedIn}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

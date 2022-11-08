@@ -26,11 +26,6 @@ router.get('/high-scores', async (req, res) => {
   res.render('high-scores');
 });
 
-router.get('/signup', async (req, res) => {
-
-  res.render('signup');
-});
-
 // Use withAuth middleware to prevent access to route
 // router.get('/profile', withAuth, async (req, res) => {
 
