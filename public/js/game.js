@@ -4,15 +4,22 @@
 // add logic to check answers that are given by the users
 //      add a message telling the user whether their score was correct or incorrect
 // add logic to update scores based on a correct/incorrect answer
-const socket = io();
-let {Game, User} = require('../../models')
+const socket = io("https://localhost:3001");
+let {Game} = require('../../models')
 const curTurn = false;
+const questionClickHandler = async function (event) {
+    // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
+            console.log('clicked')
+        };
 
 socket.on('buzzed', data => {
     // Show results
-    
+    //Prototype for now, will be an API call
     Game.curr_turn = Object.keys(socket.game_id)[1]
-    if (curr_turn = User.username){
+    req.session.save(() => {
+        req.session.myTurn = true;
+    })
+    if (myTurn){
         window.alert('Pick a question!');
         // handle button presses from the game view
         curTurn = true
@@ -29,11 +36,6 @@ socket.on('buzzed', data => {
             };
         };
     };
-        const questionClickHandler = async function (event) {
-    // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
-            console.log('clicked')
-        };
-
 
     // Disable buzz button
     $('#buzz-button').removeClass('enabled').attr('disabled', 'disabled');
