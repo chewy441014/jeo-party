@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
   });
 
     socket.on('buzzed', request => {
-      const game_id = Object.keys(socket.game_ids)[1];
+      console.log('buzzed');
 
       // Emit to all sockets in room
       io.sockets.in(game_id).emit('buzzed', request);
