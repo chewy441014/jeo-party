@@ -5,14 +5,13 @@
 //      add a message telling the user whether their score was correct or incorrect
 // add logic to update scores based on a correct/incorrect answer
 const socket = io("http://localhost:3001");
-const curTurn = false;
+let {Game} = require('../../models')
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
             console.log('clicked')
         };
 
     // Show results
-    //Prototype for now, will be an API call
     req.session.save(() => {
         req.session.myTurn = true;
     })
