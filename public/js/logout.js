@@ -1,7 +1,7 @@
 // handle logout and button presses and the logout button response
 
-
 const logout = async () => {
+  // TO DO setup the api to log the user out
   const response = await fetch('/api/user-routes/logout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
