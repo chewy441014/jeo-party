@@ -8,14 +8,15 @@ const socket = io("http://localhost:3001");
 let {Game} = require('../../models')
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
-            console.log('clicked')
-        };
+
+    console.log('clicked')
+};
 
     // Show results
     req.session.save(() => {
         req.session.myTurn = true;
     })
-    if (myTurn){
+    if (myTurn) {
         window.alert('Pick a question!');
         // handle button presses from the game view
         curTurn = true
