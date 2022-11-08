@@ -3,20 +3,64 @@ const { User } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', async (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
+
+//login button --TODO
+router.post('/login', async (req, res) => {
   try {
-    const userRoute = await User.findAll;
-    res.status(200).json(userRoute);
-  } catch (err) {
-    res.status(500).json(err);
+    const user = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    });
+
+    if (!user) {
+      res.status(400).json({ message: 'No user account found!' });
+      return;
     }
+
+    const validPassword = user.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res.status(400).json({ message: 'No user account found!' });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.userId = user.id;
+      req.session.username = user.username;
+      req.session.loggedIn = true;
+
+      res.json({ user, message: 'You are now logged in!' });
+    });
+  } catch (err) {
+    res.status(400).json({ message: 'No user account found!' });
+  }
 });
+
+// Logout --TODO
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
+
+// router.get('/', async (req, res) => {
+//   // find all categories
+//   try {
+//     const userRoute = await User.findAll;
+//     res.status(200).json(userRoute);
+//   } catch (err) {
+//     res.status(500).json(err);
+//     }
+// });
 
 router.get('/:id', async (req, res) => {
   // find one category by its `id` value
-  // be sure to include its associated Products
   try {
     const userRoute = await User.findByPk(req.params.id);
     if (!userRoute) {
@@ -29,16 +73,27 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+//Creating a new user and password
 router.post('/', async (req, res) => {
-  // create a new category
   try {
-    const newUser = await User.create(req.body);
-    res.status(200).json(newUser);
+    const newUser = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+    });
+
+    req.session.save(() => {
+      req.session.userId = newUser.id;
+      req.session.username = newUser.username;
+      req.session.loggedIn = true;
+
+      res.status(200).json(newUser);
+    });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 
+//Change a user or password - not functioning on site
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
   try {
@@ -57,8 +112,9 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+//Delete a user or password - not functioning on site
 router.delete('/:id', async (req, res) => {
-  // delete a category by its `id` value
   try {
     const deleteRoute = await User.destroy({
       where: {

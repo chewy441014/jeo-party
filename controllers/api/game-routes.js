@@ -3,17 +3,31 @@ const { Game } = require('../../models');
 
 // The `/api/categories` endpoint
 
-// find all categories
-router.get('/', async (req, res) => {
+
+// create a new Game (Start Game button) -- TODO 
+router.post('/', async (req, res) => {
   try {
-    const gameRoute = await Game.findAll;
-    res.status(200).json(gameRoute);
+    const newGame = await Game.create(req.body);
+    res.status(200).json(newGame);
   } catch (err) {
-    res.status(500).json(err);
-    }
+    res.status(400).json(err);
+  }
 });
 
+// find all categories
+
+// router.get('/', async (req, res) => {
+//   try {
+//     const gameRoute = await Game.findAll;
+//     res.status(200).json(gameRoute);
+//   } catch (err) {
+//     res.status(500).json(err);
+//     }
+// });
+
+
  // find one category by its `id` value
+ //join game button
 router.get('/:id', async (req, res) => {
  try {
     const gameRoute = await Game.findByPk(req.params.id);
@@ -27,17 +41,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// create a new category
-router.post('/', async (req, res) => {
-  try {
-    const newGame = await Game.create(req.body);
-    res.status(200).json(newGame);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
 
-// update a category by its `id` value
+
+// update a game by its `id` value
 router.put('/:id', async (req, res) => {
   try {
     const updateGame = await Game.update(req.body, {
@@ -55,7 +61,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// delete a category by its `id` value
+// delete a game by its `id` value
 router.delete('/:id', async (req, res) => {
   try {
     const deleteRoute = await Game.destroy({
