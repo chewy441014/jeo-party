@@ -43,9 +43,9 @@ app.use(routes);
 io.on('connection', (socket) => {
 
   socket.on('game_id', request => {
-    const {game_id, username} = request;
+    const { game_id, username } = request;
 
-    io.in(game_id).clients((error,clients) => {
+    io.in(game_id).clients((error, clients) => {
       const numOfClients = clients.length;
 
       socket.emit('host', (numOfClients === 0));
@@ -55,19 +55,21 @@ io.on('connection', (socket) => {
       io.sockets.in(game_id).emit('nPlayers', numOfClients + 1)
     });
   });
-  
   socket.on("answerText", (data)=>{
     io.to(data.substring(0, 5)).emit("answerText", data.substring(5, data.length));
-  
 
-  socket.on('buzzed', request => {
-    const game_id = Object.keys(socket.game_ids)[1];
 
     // Emit to all sockets in room
     io.sockets.in(game_id).emit('buzzed', request);
   });
+
+    socket.on('buzzed', request => {
+      const game_id = Object.keys(socket.game_ids)[1];
+
+      // Emit to all sockets in room
+      io.sockets.in(game_id).emit('buzzed', request);
+    });
   });
-});
   io.on('disconnect', function() {
     console.log('user disconnected');
   });

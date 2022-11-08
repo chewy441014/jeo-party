@@ -13,11 +13,11 @@ Score.belongsTo(User, {
 });
 
 Game.hasMany(User, {
-  foreignKey: 'username',
+  foreignKey: 'user_id',
 })
 
 User.belongsTo(Game, {
-  foreignKey: 'username'
+  foreignKey: 'user_id'
 })
 
 Game.hasMany(GameState, {
