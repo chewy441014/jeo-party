@@ -16,7 +16,6 @@ const joinGameFn = async function (event) {
 
 const createGameFn = async function (event) {
     event.preventDefault();
-    const timeBtwnTurns = document.querySelector('#longTime').value;
     const timePerTurn = document.querySelector('#turnTime').value;
     // make a call to create a game object in the api
     // to do post request needs to send back confirmation all went well to start game and validation for user inputs required. 

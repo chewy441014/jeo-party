@@ -1,7 +1,7 @@
 const { UUIDV4, Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Game extends Model {}
+class Game extends Model { }
 
 Game.init(
   {
@@ -11,17 +11,32 @@ Game.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    num_users: {
+    usernames: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'username',
+      }
+    },
+    points: {
       type: DataTypes.INTEGER,
+
+    },
+    curr_turn: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    game_id: {
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
+    gameState_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'gameState',
+        key: 'id',
+      },
     }
   },
   {
