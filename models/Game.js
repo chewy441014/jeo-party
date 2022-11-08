@@ -21,10 +21,12 @@ Game.init(
     },
     points: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     gameState_id: {
       type: DataTypes.UUID,

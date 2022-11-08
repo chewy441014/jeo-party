@@ -21,6 +21,7 @@ GameState.init({
     was_answered: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
     }
 },
     {

@@ -19,10 +19,39 @@ const createGameFn = async function (event) {
     const timePerTurn = document.querySelector('#turnTime').value;
     // make a call to create a game object in the api
     // to do post request needs to send back confirmation all went well to start game and validation for user inputs required. 
-    const response = await fetch();
+    let player1Score = 0;
+    let player2Score = 0;
+    const categories = await fetch(`/api/questions/rand-cat/`,{
+        method: 'GET',
+      });
+      console.log(categories);
+      const questions1 = await fetch(`/api/questions/rand-quest/${categories[0]}`,{
+        method: 'GET',
+      });
+      const questions2 = await fetch(`/api/questions/rand-quest/${categories[1]}`,{
+        method: 'GET',
+      });
+      const questions3 = await fetch(`/api/questions/rand-quest/${categories[2]}`,{
+        method: 'GET',
+      });
+      const questions4 = await fetch(`/api/questions/rand-quest/${categories[3]}`,{
+        method: 'GET',
+      });
+      const questions5 = await fetch(`/api/questions/rand-quest/${categories[4]}`,{
+        method: 'GET',
+      });
+      const gameStateResponse = await fetch('/api/gameStates/', {
+        method: 'POST',
+        body: ({questions_id: questions1.id})
+      });
+      const newGame = await fetch('/api/games/', {
+        method: 'POST',
+        body: ({gameState_id: gameStateResponse.id})
+      });
+
 
     if (response.ok) {
-        res.status(200).render('game');
+        res.status(200).render('game', newGame);
     } else {
         alert(`Failed to create game`)
     }

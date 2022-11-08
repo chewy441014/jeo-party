@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { Question } = require('../../models');
+const sequelize = require('sequelize');
+const Question = require('../../models/Questions');
 
 // The `/api/categories` endpoint
 
@@ -77,7 +78,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/rand-quest/:cat', async (req, res) => {
   try {
     const questionRoute = await Question.findAll({
-      order: Sequelize.literal('rand()'), limit: 4,
+      order: sequelize.literal('rand()'), limit: 4,
       where: {
         category: req.params.cat,
       }
@@ -97,7 +98,7 @@ router.get('/rand-cat', async (req, res) => {
   try {
     const questionRoute = await Question.query(`SELECT DISTINCT category FROM question`,
       {
-        order: Sequelize.literal('rand()'),
+        order: sequelize.literal('rand()'),
         limit: 5
       });
     if (!questionRoute) {
