@@ -29,8 +29,8 @@ socket.on('buzzed', data => {
         // columns correspond to a single category
         // use the value and category to retrieve the corresponding question text from the database
         if (curTurn) {
-            for (var i = 0; i < 4; i++) {
-                for (var j = 0; j < 5; j++) {
+            for (var i = 1; i <= 4; i++) {
+                for (var j = 1; j <= 5; j++) {
                     document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
                 };
             };

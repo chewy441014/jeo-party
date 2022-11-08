@@ -21,11 +21,6 @@ Game.init(
     },
     points: {
       type: DataTypes.INTEGER,
-
-    },
-    curr_turn: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -37,6 +32,7 @@ Game.init(
         model: 'gameState',
         key: 'id',
       },
+      allowNull: false,
     }
   },
   {
