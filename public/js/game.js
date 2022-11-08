@@ -34,7 +34,7 @@ socket.on('buzzed', data => {
             console.log('clicked')
         };
 
-  
+
     // Disable buzz button
     $('#buzz-button').removeClass('enabled').attr('disabled', 'disabled');
   });
