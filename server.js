@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
 
       io.sockets.in(game_id).emit('nPlayers', numOfClients + 1)
     });
-  })
+  });
   
   socket.on("answerText", (data)=>{
     io.to(data.substring(0, 5)).emit("answerText", data.substring(5, data.length));
