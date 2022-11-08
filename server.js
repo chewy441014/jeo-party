@@ -56,9 +56,14 @@ io.on('connection', (socket) => {
     });
   })
 
-  socket.on("answer data", (data) => {
-    io.to(data.substring(0, 5)).emit("answer data", data.substring(5, data.length));
+  
+  socket.on("answerText", (data)=>{
+    io.to(data.substring(0, 5)).emit("answerText", data.substring(5, data.length));
 
+
+    // Emit to all sockets in room
+    io.sockets.in(game_id).emit('buzzed', request);
+  });
 
     socket.on('buzzed', request => {
       const game_id = Object.keys(socket.game_ids)[1];
@@ -67,10 +72,11 @@ io.on('connection', (socket) => {
       io.sockets.in(game_id).emit('buzzed', request);
     });
   });
-  socket.on('disconnect', function () {
+});
+  io.on('disconnect', function() {
     console.log('user disconnected');
   });
-});
+
 
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log('Now listening'));
