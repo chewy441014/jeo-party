@@ -18,7 +18,11 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
   secret: 'Super secret secret',
-  cookie: {},
+  cookie: {
+    // dies after 24 hours
+    maxAge: 24 * 60 * 60 * 1000,
+
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
@@ -57,10 +61,6 @@ io.on('connection', (socket) => {
   });
   socket.on("answerText", (data)=>{
     io.to(data.substring(0, 5)).emit("answerText", data.substring(5, data.length));
-
-
-    // Emit to all sockets in room
-    io.sockets.in(game_id).emit('buzzed', request);
   });
 
     socket.on('buzzed', request => {
