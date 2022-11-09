@@ -19,7 +19,10 @@ router.get('/:id', async (req, res) => {
 // create a new game
 router.post('/', async (req, res) => {
   try {
-    const newGameState = await GameState.create(req.body);
+    const newGameState = await GameState.bulkCreate(req.body, {
+      individualHooks: true,
+      returning: true
+    });
     res.status(200).json(newGameState);
     req.session.save(() => {
       req.session.id = newGameState.id;});
