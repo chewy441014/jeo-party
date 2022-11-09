@@ -76,11 +76,13 @@ router.get('/:id', async (req, res) => {
 //Creating a new user and password
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body)
     const newUser = await User.create({
       username: req.body.username,
       password: req.body.password,
+      loggedIn: false,
     });
-
+    console.log(newUser)
     req.session.save(() => {
       req.session.userId = newUser.id;
       req.session.username = newUser.username;
