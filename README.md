@@ -40,6 +40,8 @@ With more time we plan to:
 - Kaggle supplied the questions data
 - Larabie Fonts: https://famfonts.com/jeopardy/
 - w3 Schools
+- https://www.istockphoto.com/ - for background image 
+- codepen for some styling
 
 ## License
 

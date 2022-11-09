@@ -9,9 +9,15 @@
     color: #000;
 } */
 
+:root {
+  --darkblue:#000088;
+  --lighterblue:#0000ff;
+  --orange:#fba61d;
+}
+
 
 body {
-    background-image: url("../images/jeopardy_sunrise_background.jpg");
+    background-image: url("../images/background_image.jpeg");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -34,19 +40,27 @@ body {
 
 .display-4 {
   font-family: gyparody;
+  font-size: 5rem;
 }
 
 .jumbotron {
   text-align: center;
-  color:#ddd;
+  color:var(--darkblue);
+  
 }
 
+
+/* game page */
 /* game board */
 
 .col {
     padding-right: calc(var(--bs-gutter-x) * .1);
     padding-left: calc(var(--bs-gutter-x) * .1);
 }
+
+/* .row {
+  height: 4rem;
+} */
 
 .game-board {
         position: relative;
@@ -69,6 +83,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: row;
+    height: 100%;
 }
 
 .custom-card-size {
@@ -81,17 +96,21 @@ body {
     justify-content: center;
     align-items: center;
     
-    background: linear-gradient(to top left, #000088, #0000ff);
+    background: linear-gradient(to top left, var(--darkblue), var(--lighterblue));
     border: 3px solid #000;
   }
 
   .question-card {
     font-size: 2rem;
     font-family: impact;
-    color: #fba61d;
-    color: #fba61d;
+    color: var(--orange);
   }
 
+  /* entire category card */
+  .category-card {
+    height:5rem;
+  }
+/* text for category card */
   .card-category {
     color: white;
     font-family:ITC_korinna;
@@ -99,7 +118,7 @@ body {
   }  
 
   .question-card:hover {
-    background: linear-gradient(to top left, #0000ff, #000088);
+    background: linear-gradient(to top left, var(--lighterblue), var(--darkblue));
     color: #ddd;
   }
 
@@ -116,13 +135,19 @@ body {
     z-index: 5; */
   }
 
-  
-
   /* side cards */
 
   .side-card {
-    background-color: #dee2e6;
+    background: linear-gradient(to top left, #d5eeff, #a7d8f9);
     border: solid;
+  }
+
+  .side-card {
+    font-family: ITC_korinna;
+  }
+  .card-text {
+    font-family: ITC_korinna;
+    font-weight: 900;
   }
 
   #side-card-top {
@@ -139,10 +164,3 @@ body {
     margin-left:5px;
   }
 
-  .side-card {
-    font-family: ITC_korinna;
-  }
-  .card-text {
-    font-family: ITC_korinna;
-    font-weight: 900;
-  }
