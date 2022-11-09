@@ -24,12 +24,12 @@ body {
 /* jumbotron */
 @font-face {
   font-family: gyparody;
-  src: url(/public/images/gyparody.ttf);
+  src: url(/images/gyparody.ttf);
 }
 
 @font-face {
   font-family: ITC_korinna;
-  src: url(/public/images/ITC\ Korinna\ LT\ Bold.otf);
+  src: url(/images/ITC\ Korinna\ LT\ Bold.otf);
 }
 
 .display-4 {

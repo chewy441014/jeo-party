@@ -28,14 +28,14 @@ Game.init(
       allowNull: false,
       defaultValue: false,
     },
-    gameState_id: {
-      type: DataTypes.UUID,
-      references: {
-        model: 'gameState',
-        key: 'id',
-      },
-      allowNull: false,
-    }
+    // gameState_id: {
+    //   type: DataTypes.UUID,
+    //   references: {
+    //     model: 'gameState',
+    //     key: 'id',
+    //   },
+    //   allowNull: false,
+    // }
   },
   {
     sequelize,
