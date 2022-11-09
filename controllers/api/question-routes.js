@@ -19,18 +19,17 @@ router.get('/rand-cat', async (req, res) => {
   try {
     const questionRoute = await sequelize.query(`SELECT DISTINCT category FROM question ORDER BY RAND() LIMIT 5`);
     const categories = questionRoute[0];
-    console.log(categories);
     if (!categories) {
       return res.status(400).json({ message: 'No categories found!' });
     }
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
   } catch (err) {
     console.log(err)
     res.status(500).json(err);
   }
 });
 
-// find one category by its `id` value
+// find one  by its `id` value
 router.get('/:id', async (req, res) => {
   try {
     const questionRoute = await Question.findByPk(req.params.id);
