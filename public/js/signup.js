@@ -5,7 +5,6 @@ const signupFormHandler = async (event) => {
 
     const username = document.querySelector('#username').value.trim();
     const password = document.querySelector('#password').value.trim();
-
     if (username && password) {
         // TO DO setup the api routes to allow users to create a new account
         const response = await fetch('/api/users', {

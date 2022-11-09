@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Home, User , Score, Question, GameState, Game} = require('../models');
+const { Home, User, Score, Question, GameState, Game } = require('../models');
 //const withAuth = require('../utils/auth');
 
 //Homepage route
 router.get('/', async (req, res) => {
   try {
-        res.render('home', { 
+    res.render('home', {
       loggedIn: req.session.loggedIn
     });
   } catch (err) {
@@ -13,13 +13,14 @@ router.get('/', async (req, res) => {
   }
 });
 
- //TODO - potentially update later
+//TODO - potentially update later
 router.get('/game', async (req, res) => {
-  
+  res.render('game');
+});
 
-    res.render('game');
-    });
-
+router.get('/login', async (req, res) => {
+  res.render('login');
+});
 //high-scores home route  -- update top High Scores-- top 5 TODO
 router.get('/high-scores', async (req, res) => {
   //add try catch -- call db to get all users high scores 
@@ -27,7 +28,7 @@ router.get('/high-scores', async (req, res) => {
     const allHighScores = await Score.findAll({
       order: [
         ['score', 'DESC'],
-    ],
+      ],
     })
     console.log(allHighScores)
     res.render("high-scores", {
