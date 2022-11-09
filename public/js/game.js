@@ -73,21 +73,21 @@ const questionClickHandler = async function (event) {
             questionNumber = 19;
         break
     };
-    const gameID = await fetch('/api/gameStates',{
+    const gameID = req.session.id;
+    console.log(gameID);
+    const questionIdResp = await fetch(`/api/gameStates/${gameID}`,{
         method: 'GET'
     });
-    console.log(gameID);
-    const questionIDs = await fetch(`/api/gameStates/${gameID}`,{
-        method: 'GET'
-    })
+    const questionIDs = await questionIdResp.json();
     console.log(questionIDs);
-    const questionText = await fetch(`/api/questions/${questionIDs[questionNumber]}`, {
+    const questionTextResp = await fetch(`/api/questions/${questionIDs[questionNumber]}`, {
         method: 'GET',
-    })
-    console.log(questionText);
+    });
+    const questionText = await questionTextResp.json()
+    console.log(questionText.question);
 
     const questionBox = document.getElementById('question-text');
-    questionBox.textContent = questionText;
+    questionBox.textContent.replace(questionText.question);
 
     console.log('clicked');
     console.log(questionNumber);

@@ -52,17 +52,19 @@ const createGameFn = async function (event) {
     });
     const quesData5 = await quesResp5.json();
     quesArr.push(...quesData5);
-    console.table(quesArr);
     const quesIDs = quesArr.map((ques) => ({question_id: ques.id}))
-    console.log(quesIDs);
     const gameStateResponse = await fetch('/api/gameStates/', {
       method: 'POST',
-      body: JSON.stringify(quesIDs),
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(quesIDs),
+      //headers: { 'Content-Type': 'application/json' },
     });
     const newGame = await fetch('/api/games/', {
       method: 'POST',
     });
+    //newGame.render('game');
+  }else{
+    alert('Failed to create game')
   }
 
 
