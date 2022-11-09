@@ -50,11 +50,11 @@ const createGameFn = async function (event) {
       });
 
 
-    if (response.ok) {
-        res.status(200).render('game', newGame);
-    } else {
-        alert(`Failed to create game`)
-    }
+    // if (response.ok) {
+    //     res.status(200).render('game', newGame);
+    // } else {
+    //     alert(`Failed to create game`)
+    // }
 }
 
 // select the button and create the event listener, which calls joinGameFn

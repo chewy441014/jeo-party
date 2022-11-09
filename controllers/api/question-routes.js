@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const sequelize = require('sequelize');
+const sequelize = require('../../config/connection');
 const Question = require('../../models/Questions');
 
 // The `/api/categories` endpoint
@@ -14,12 +14,30 @@ const Question = require('../../models/Questions');
 //     }
 // });
 
+//get route for 5 random categories 
+router.get('/rand-cat', async (req, res) => {
+  try {
+    const questionRoute = await sequelize.query(`SELECT DISTINCT category FROM question`,
+      {
+        order: sequelize.literal('rand()'),
+        limit: 5
+      });
+    if (!questionRoute) {
+      return res.status(400).json({ message: 'No categories found!' });
+    }
+    res.status(200).json(questionRoute);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err);
+  }
+});
+
 // find one category by its `id` value
 router.get('/:id', async (req, res) => {
   try {
     const questionRoute = await Question.findByPk(req.params.id);
     if (!questionRoute) {
-      res.status(404).json({ message: 'No question found with that id!' });
+      res.status(404).json({ message: `No question found with that id, question ${req.params.id}!` });
       return;
     }
     res.status(200).json(questionRoute);
@@ -34,6 +52,7 @@ router.post('/', async (req, res) => {
     const newQuestion = await Question.create(req.body);
     res.status(200).json(newQuestion);
   } catch (err) {
+    console.log('Failed to create new question')
     res.status(400).json(err);
   }
 });
@@ -47,7 +66,7 @@ router.put('/:id', async (req, res) => {
       },
     });
     if (!updateQuestion) {
-      res.status(404).json({ message: 'No question found with that id!' });
+      res.status(404).json({ message: 'No question found with that id! Cannot update' });
       return;
     }
     res.status(200).json(updateQuestion);
@@ -65,7 +84,7 @@ router.delete('/:id', async (req, res) => {
       },
     });
     if (!deleteRoute) {
-      res.status(404).json({ message: 'No question found with that id!' });
+      res.status(404).json({ message: 'No question found with that id! Cannot delete' });
       return;
     }
     res.status(200).json(deleteRoute);
@@ -84,7 +103,7 @@ router.get('/rand-quest/:cat', async (req, res) => {
       }
     });
     if (!questionRoute) {
-      res.status(404).json({ message: 'No question found!' });
+      res.status(404).json({ message: 'No question found for that category!' });
       return;
     }
     res.status(200).json(questionRoute);
@@ -93,22 +112,6 @@ router.get('/rand-quest/:cat', async (req, res) => {
   }
 });
 
-//get route for 5 random categories 
-router.get('/rand-cat', async (req, res) => {
-  try {
-    const questionRoute = await Question.query(`SELECT DISTINCT category FROM question`,
-      {
-        order: sequelize.literal('rand()'),
-        limit: 5
-      });
-    if (!questionRoute) {
-      res.status(404).json({ message: 'No question found!' });
-      return;
-    }
-    res.status(200).json(questionRoute);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+
 
 module.exports = router;
