@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     console.log(req.session.userId)
     const newGame = await Game.create({user_id: req.session.userId});
     res.status(200).json(newGame);
+    res.render('game');
   } catch (err) {
     res.status(400).json(err);
   }
