@@ -164,3 +164,20 @@ body {
     margin-left:5px;
   }
 
+/* login page */
+
+.form-control {
+ justify-content: center;
+ align-items: center;
+ width: 200px;
+ text-align: center;
+ margin-left: 42%;
+}
+
+.form-label {
+  margin-left: 43%;
+}
+
+.btn {
+  margin-left: 47%;
+}
