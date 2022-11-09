@@ -17,15 +17,13 @@ const Question = require('../../models/Questions');
 //get route for 5 random categories 
 router.get('/rand-cat', async (req, res) => {
   try {
-    const questionRoute = await sequelize.query(`SELECT DISTINCT category FROM question`,
-      {
-        order: sequelize.literal('rand()'),
-        limit: 5
-      });
-    if (!questionRoute) {
+    const questionRoute = await sequelize.query(`SELECT DISTINCT category FROM question ORDER BY RAND() LIMIT 5`);
+    const categories = questionRoute[0];
+    console.log(categories);
+    if (!categories) {
       return res.status(400).json({ message: 'No categories found!' });
     }
-    res.status(200).json(questionRoute);
+    res.status(200).json(categories);
   } catch (err) {
     console.log(err)
     res.status(500).json(err);
