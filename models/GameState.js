@@ -16,12 +16,20 @@ GameState.init({
         references: {
             model: 'question',
             key: 'id',
-          },
+        },
     },
     was_answered: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+    },
+    game_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'game',
+            key: 'id',
+        },
+        allowNull: false,
     }
 },
     {

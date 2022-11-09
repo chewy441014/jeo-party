@@ -20,12 +20,12 @@ User.belongsTo(Game, {
   foreignKey: 'user_id'
 })
 
-Game.hasMany(GameState, {
-  foreignKey: 'gameState_id',
+Game.belongsToMany(GameState, {
+  through: 'GameLink',
 })
 
-GameState.belongsTo(Game, {
-  foreignKey: 'gameState_id',
+GameState.belongsToMany(Game, {
+  through: 'GameLink',
 })
 
 GameState.hasMany(Questions, {
