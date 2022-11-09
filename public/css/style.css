@@ -1,13 +1,148 @@
+*, *:before, *:after { box-sizing: border-box; }
 
-.custom-card-size {
-    width: 8rem;
-    height: 8rem;
+
+/* TODO */
+/* curser */
+
+/* keep button active -- use js to remove button??*/
+/* .question {
+    color: #000;
+} */
+
+
+body {
+    background-image: url("../images/jeopardy_sunrise_background.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* height: 100vh; */
+    width: 100%;
+    height: 100%;
+}
+
+/* jumbotron */
+@font-face {
+  font-family: gyparody;
+  src: url(/public/images/gyparody.ttf);
+}
+
+@font-face {
+  font-family: ITC_korinna;
+  src: url(/public/images/ITC\ Korinna\ LT\ Bold.otf);
+}
+
+.display-4 {
+  font-family: gyparody;
+}
+
+.jumbotron {
+  text-align: center;
+  color:#ddd;
+}
+
+/* game board */
+
+.col {
+    padding-right: calc(var(--bs-gutter-x) * .1);
+    padding-left: calc(var(--bs-gutter-x) * .1);
 }
 
 .game-board {
-    width: 70%;
+        position: relative;
+        top: 0px;
+        bottom: 0px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-right: 7px;
 }
 
 .interactive-column {
     width: 18rem;
 }
+
+.custom-card-size{
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.custom-card-size {
+    top: 0;
+    bottom: 0;
+    flex: 1;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: linear-gradient(to top left, #000088, #0000ff);
+    border: 3px solid #000;
+  }
+
+  .question-card {
+    font-size: 2rem;
+    font-family: impact;
+    color: #fba61d;
+    color: #fba61d;
+  }
+
+  .card-category {
+    color: white;
+    font-family:ITC_korinna;
+    font-size: 1rem;
+  }  
+
+  .question-card:hover {
+    background: linear-gradient(to top left, #0000ff, #000088);
+    color: #ddd;
+  }
+
+   .question-card:active {
+    background-color: #000;
+    color:#000;
+    /* border-width: 0;
+    font-size: 10vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5; */
+  }
+
+  
+
+  /* side cards */
+
+  .side-card {
+    background-color: #dee2e6;
+    border: solid;
+  }
+
+  #side-card-top {
+    height: 8.5rem;
+  }
+
+  #side-card-bottom {
+    height: 22rem;
+  }
+
+  .side-card-footer {
+    align-items: baseline;
+    margin-bottom: 5px;
+    margin-left:5px;
+  }
+
+  .side-card {
+    font-family: ITC_korinna;
+  }
+  .card-text {
+    font-family: ITC_korinna;
+    font-weight: 900;
+  }

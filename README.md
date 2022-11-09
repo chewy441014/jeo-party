@@ -38,6 +38,8 @@ With more time we plan to:
 - Utilized Google Docs to plan project
 - Utilized Figma to draw out wireframe for project
 - Kaggle supplied the questions data
+- Larabie Fonts: https://famfonts.com/jeopardy/
+- w3 Schools
 
 ## License
 

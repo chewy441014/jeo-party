@@ -33,3 +33,19 @@ const questionClickHandler = async function (event) {
             };
         };
     };
+
+
+
+    
+//TODO:alter question box once chosen
+
+        // remove div once clicked????
+    //can take out for loop from if stmt to run on load
+    
+// var style = document.createElement('style');
+//     style.innerHTML =
+//             '.question {' +
+//             'color: black;' +
+//             '}';
+
+//  var ref = document.querySelector('script');            
