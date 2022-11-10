@@ -11,6 +11,7 @@ const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
 
 let activeGame;
+const players = [];
 
 //From TutorialRepublic
 function getCookie(name) {
@@ -46,15 +47,24 @@ const onLoad = async function () {
         method: 'GET'
     });
     const userdata = await response.json();
-    socket.emit('player joined', `Player: ${userdata[0]}  has joined.`) //on load emit 'username joined game'
-    for (var i = 1; i <= 4; i++) {
-        for (var j = 1; j <= 5; j++) {
-            document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
-        };
-    };
+    socket.emit('player joining', `${userdata[0]}`) //on load emit 'username joined game'
     socket.on('player joined', (data) => {
-        console.log(data)
+        console.log('Both players present, begin game.')
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= 5; j++) {
+                document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
+            };
+        };
+        // make player 1 buttons clickable
+        players.push(userdata[0]);
+        players.push(data);
+        socket.emit('send users', players);
     });
+    socket.on('send users', (data) => {
+        if (players.length !== data.length) {
+            players.push(...data)
+        }
+    })
 }
 
 // Function to pull down game data into a local object in the scripts
