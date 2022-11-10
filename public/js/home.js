@@ -42,7 +42,7 @@ const createGameFn = async function (event) {
   console.log(gameData)
   if (getGameDataResp.ok) {
     alert('Cannot create duplicate game, join your current game.')
-    // document.location.replace(`/game/${gameData.game_id}`)
+    document.location.replace(`/game/${gameData.game_id}`)
     return;
   }
   const gameID = UUID();
