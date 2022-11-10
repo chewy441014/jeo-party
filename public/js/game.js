@@ -4,33 +4,68 @@
 // add logic to check answers that are given by the users
 //      add a message telling the user whether their score was correct or incorrect
 
-const { Game } = require("../../models");
+//const { Game } = require("../../models");
 
 // add logic to update scores based on a correct/incorrect answer
 const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
 
+let activeGame;
+
+//From TutorialRepublic
+function getCookie(name) {
+    // Split cookie string and get all individual name=value pairs in an array
+    var cookieArr = document.cookie.split(";");
+    
+    // Loop through the array elements
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if(name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    
+    // Return null if not found
+    return null;
+};
+
+//Function to update the database with the local object
+const updateGame = async function (activeGame) {
+    const updateGameData = await fetch(`/api/games/${getCookie("userId")}`, {
+        method: 'PUT',
+        body: JSON.stringify(activeGame),
+    })
+};
+
 // Function to pull down game data into a local object in the scripts
-const getGame = async function () {
-const getGameDataResp  = await fetch(`/api/games/${req.session.username}`, {
+const getGame = async function (questionNumber, questionValue) {
+    var userId = getCookie("userId");
+const getGameDataResp  = await fetch(`/api/games/${userId}`, {
     method: 'GET',
-    body: ({user_id, points, game_id})
 });
 const getGameData = await getGameDataResp.json();
+console.log(getGameData);
 const getGameStateDataResp = await fetch(`/api/gameStates/${getGameData.game_id}`, {
     method: 'GET',
-    body: ({question_id})
 });
 const getGameStateData = await getGameStateDataResp.json();
+const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {
+    method: 'GET',
+});
+const questionText = await questionTextResp.json()
+console.log(questionText.question);
+
+const questionBox = document.getElementById('#question-text');
+questionBox.textContent.replace(questionText.question);
+
+document.getElementById('#submit-button').addEventListener('submit', submitAnswer(activeGame, questionText.answer, questionValue));
 return activeGame = {user_id: getGameData.user_id, points: getGameData.points, game_id: getGameData.game_id};
 };
-//Function to update the database with the local object
-const updateGame = async function () {
-const updateGameData = await fetch(`/api/games/${req.session.username}`, {
-    method: 'POST',
-    body: JSON.stringify(activeGame),
-})
-};
+
 
 const checkAnswer = (answerInput, correctAnswer) => {
     let answerBoolean = false;
@@ -40,7 +75,7 @@ const checkAnswer = (answerInput, correctAnswer) => {
     return answerBoolean;
 };
 
-const submitAnswer = async function (correctAnswer, playerScore) {
+const submitAnswer = async function (activeGame, correctAnswer, playerScore) {
     // Need API route to get correct answer
     if (checkAnswer(document.getElementById('#answerText').value, correctAnswer)) {
         document.getElementById('#answerText').reset();
@@ -56,7 +91,7 @@ const submitAnswer = async function (correctAnswer, playerScore) {
         alert('Answer is incorrect');
         subtractScore(activeGame.points, playerScore)
     }
-    updateGame();
+    updateGame(activeGame);
 };
 
 // Function to get the selected question from the database to populate on the page
@@ -148,22 +183,7 @@ const questionClickHandler = async function (event) {
             questionValue = 800;
         break
     };
-    getGame();
-    const getGameStateDataResp = await fetch(`/api/gameStates/${activeGame.game_id}`, {
-        method: 'GET',
-        body: ({question_id})
-    });
-    const getGameStateData = await getGameStateDataResp.json();
-    const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber]}`, {
-        method: 'GET',
-    });
-    const questionText = await questionTextResp.json()
-    console.log(questionText.question);
-
-    const questionBox = document.getElementById('#question-text');
-    questionBox.textContent.replace(questionText.question);
-
-    document.getElementById('#submit-button').addEventListener('submit', submitAnswer(questionText.answer, questionValue));
+    getGame(questionNumber, questionValue);
 
     console.log('clicked');
     console.log(questionNumber);

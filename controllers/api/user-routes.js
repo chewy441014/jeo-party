@@ -59,10 +59,10 @@ router.post('/logout', (req, res) => {
 //     }
 // });
 
-router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
+router.get('/:username', async (req, res) => {
+  // find one user by its `username` value
   try {
-    const userRoute = await User.findByPk(req.params.id);
+    const userRoute = await User.findOne(req.session.username);
     if (!userRoute) {
       res.status(404).json({ message: 'No User found with that id!' });
       return;
