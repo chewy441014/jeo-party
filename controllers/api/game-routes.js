@@ -7,10 +7,13 @@ const { Game } = require('../../models');
 // create a new Game (Start Game button) -- TODO 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.session.userId)
-    const newGame = await Game.create({user_id: req.session.userId});
-    res.status(200).render('game');
+    const newGame = await Game.create({
+      user_id: req.session.userId,
+      game_id: req.body.game_id 
+    });
+    res.status(200);
   } catch (err) {
+    console.log(err)
     res.status(400).json(err);
   }
 });
