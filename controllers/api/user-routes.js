@@ -73,11 +73,11 @@ router.get('/:username', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   try {
     res.status(200).json([req.session.username, req.session.userId]);
   } catch (err) {
-    return err
+    res.status(500).json(err);
   }
 })
 

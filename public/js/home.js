@@ -17,8 +17,8 @@ const joinGameFn = async function (event) {
   // to do get request looks for a game with ID and gets the game data and sends the user to the game view
   const response = await fetch('/api/games/', {
     method: 'POST',
-    body: JSON.stringify({game_id: gameID}),
-    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ game_id: gameID }),
+    headers: { 'Content-Type': 'application/json' },
   });
   if (response.ok) {
     document.location.replace(`/game/${gameID}`)
@@ -30,6 +30,19 @@ const joinGameFn = async function (event) {
 const createGameFn = async function (event) {
   event.preventDefault();
 
+  const userResponse = await fetch('/api/users', {
+    method: 'GET'
+  });
+  const userData = await userResponse.json();
+  const getGameDataResp = await fetch(`/api/games/${userData[1]}`, {
+    method: 'GET',
+  });
+  const gameData = await getGameDataResp.json();
+  if (getGameDataResp.ok) {
+    alert('Cannot create duplicate game, join your current game.')
+    document.location.replace(`/game/`)
+    return;
+  }
   const gameID = UUID();
   // make a call to create a game object in the api
   // to do post request needs to send back confirmation all went well to start game and validation for user inputs required. 
@@ -49,8 +62,8 @@ const createGameFn = async function (event) {
   console.log(gameStateArr);
   const response = await fetch('/api/games/', {
     method: 'POST',
-    body: JSON.stringify({game_id: gameID}),
-    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ game_id: gameID }),
+    headers: { 'Content-Type': 'application/json' },
   });
   if (response.ok) {
     // the game data has been saved to the data base, make another home route to route the user based on the gameid
