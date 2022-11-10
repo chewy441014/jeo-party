@@ -23,19 +23,10 @@ Game.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
-    isActive: {
-      type: DataTypes.BOOLEAN,
+    game_id: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: false,
-    },
-    // gameState_id: {
-    //   type: DataTypes.UUID,
-    //   references: {
-    //     model: 'gameState',
-    //     key: 'id',
-    //   },
-    //   allowNull: false,
-    // }
+    }
   },
   {
     sequelize,
