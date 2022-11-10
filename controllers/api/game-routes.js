@@ -31,6 +31,23 @@ router.post('/', async (req, res) => {
 // });
 
 
+router.get('/:user_id', async (req, res) => {
+  try {
+     const gameRoute = await Game.findOne(req.body, {
+      where: {
+        user_id: req.session.user_id
+      }
+     });
+     if (!gameRoute) {
+       res.status(404).json({ message: 'No game found with that id!' });
+       return;
+     }
+     res.status(200).json(gameRoute);
+   } catch (err) {
+     res.status(500).json(err);
+   }
+ });
+
  // find one category by its `id` value
  //join game button
 router.get('/:id', async (req, res) => {
