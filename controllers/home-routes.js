@@ -18,6 +18,15 @@ router.get('/game', async (req, res) => {
   res.render('game');
 });
 
+router.get('/game/:id', async (req, res) => {
+  req.session.save(() => {
+    req.session.gameId = req.params.id
+  });
+  res.render('game', {
+    loggedIn: req.session.loggedIn
+  });
+});
+
 router.get('/login', async (req, res) => {
   res.render('login');
 });
