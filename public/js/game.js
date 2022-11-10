@@ -3,9 +3,34 @@
 // add button click functionality to populate each question into the given field
 // add logic to check answers that are given by the users
 //      add a message telling the user whether their score was correct or incorrect
+
+const { Game } = require("../../models");
+
 // add logic to update scores based on a correct/incorrect answer
 const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
+
+// Function to pull down game data into a local object in the scripts
+const getGame = async function () {
+const getGameDataResp  = await fetch(`/api/games/${req.session.username}`, {
+    method: 'GET',
+    body: ({user_id, points, game_id})
+});
+const getGameData = await getGameDataResp.json();
+const getGameStateDataResp = await fetch(`/api/gameStates/${getGameData.game_id}`, {
+    method: 'GET',
+    body: ({question_id})
+});
+const getGameStateData = await getGameStateDataResp.json();
+return activeGame = {user_id: getGameData.user_id, points: getGameData.points, game_id: getGameData.game_id};
+};
+//Function to update the database with the local object
+const updateGame = async function () {
+const updateGameData = await fetch(`/api/games/${req.session.username}`, {
+    method: 'POST',
+    body: JSON.stringify(activeGame),
+})
+};
 
 const checkAnswer = (answerInput, correctAnswer) => {
     let answerBoolean = false;
@@ -19,7 +44,7 @@ const submitAnswer = async function (correctAnswer, playerScore) {
     // Need API route to get correct answer
     if (checkAnswer(document.getElementById('#answerText').value, correctAnswer)) {
         document.getElementById('#answerText').reset();
-
+        addScore(activeGame.points, playerScore);
             if (req.session.myTurn) {
                 req.session.myTurn = false;
             }
@@ -29,14 +54,10 @@ const submitAnswer = async function (correctAnswer, playerScore) {
     }
     else{
         alert('Answer is incorrect');
+        subtractScore(activeGame.points, playerScore)
     }
+    updateGame();
 };
-
-// Function to pull down game data into a local object in the script
-//const getGameData();
-//Function to update the database with the local object
-//const updateGameData();
-
 
 // Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
@@ -127,14 +148,13 @@ const questionClickHandler = async function (event) {
             questionValue = 800;
         break
     };
-    const gameID = req.session.id;
-    console.log(gameID);
-    const questionIdResp = await fetch(`/api/gameStates/${gameID}`,{
-        method: 'GET'
+    getGame();
+    const getGameStateDataResp = await fetch(`/api/gameStates/${activeGame.game_id}`, {
+        method: 'GET',
+        body: ({question_id})
     });
-    const questionIDs = await questionIdResp.json();
-    console.log(questionIDs);
-    const questionTextResp = await fetch(`/api/questions/${questionIDs[questionNumber]}`, {
+    const getGameStateData = await getGameStateDataResp.json();
+    const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber]}`, {
         method: 'GET',
     });
     const questionText = await questionTextResp.json()
