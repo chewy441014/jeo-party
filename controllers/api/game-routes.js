@@ -33,13 +33,15 @@ router.post('/', async (req, res) => {
 
 router.get('/activeGame/:user_id', async (req, res) => {
   try {
-     const gameRoute = await Game.findOne(req.body, {
+    console.log(req.params.user_id)
+     const gameRoute = await Game.findAll({
       where: {
-        user_id: req.session.user_id
+        user_id: req.params.user_id
       }
      });
-     if (!gameRoute) {
-       res.status(404).json({ message: 'No game found with that id!' });
+     console.log(gameRoute)
+     if (!gameRoute || gameRoute.length === 0) {
+       res.status(404).json({ message: 'No game found with that user id!' });
        return;
      }
      res.status(200).json(gameRoute);

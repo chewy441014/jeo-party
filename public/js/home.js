@@ -60,6 +60,7 @@ const createGameFn = async function (event) {
   const gamestateresponse = await fetch('/api/gameStates/', {
     method: 'POST',
     body: JSON.stringify(gameStateArr),
+    headers: { 'Content-Type': 'application/json' },
   });
   console.log(gameStateArr);
   console.log(gamestateresponse);
@@ -71,7 +72,7 @@ const createGameFn = async function (event) {
   console.log(response)
   if (response.ok) {
     // the game data has been saved to the data base, make another home route to route the user based on the gameid
-    // document.location.replace(`/game/${gameID}`)
+    document.location.replace(`/game/${gameID}`)
   } else {
     alert('Failed to create game');
   }
