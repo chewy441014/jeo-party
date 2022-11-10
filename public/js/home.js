@@ -60,6 +60,7 @@ const createGameFn = async function (event) {
   const gamestateresponse = await fetch('/api/gameStates/', {
     method: 'POST',
     body: JSON.stringify(gameStateArr),
+    headers: { 'Content-Type': 'application/json' },
   });
   console.log(gameStateArr);
   console.log(gamestateresponse);
