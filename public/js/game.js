@@ -120,8 +120,10 @@ const submitAnswer = async function (activeGame, correctAnswer, playerScore) {
 // Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
-    cardID = event.target.id;
+    cardID = event.target.getAttribute("id");
     console.log(cardID);
+    event.currentTarget.style.backgroundColor= "black";
+    // event.target.style.display= "none";
     let questionNumber = 0;
     let questionValue = 0;
     switch (cardID) {
