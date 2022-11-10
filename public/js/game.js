@@ -45,16 +45,19 @@ socket.emit('player joined', `Player:  has joined.`) //on load emit 'username jo
 
 // Function to pull down game data into a local object in the scripts
 const getGame = async function (questionNumber, questionValue) {
-    var userId = getCookie("userId");
+    const userResp = await fetch('/api/users', {
+        method: 'GET',
+    });
+    const userId = await userResp.json();;
     console.log(userId);
-const getGameDataResp  = await fetch(`/api/games/${userId}`, {
-    method: 'GET',
-});
-const getGameData = await getGameDataResp.json();
-console.log(getGameData.game_id);
-const getGameStateDataResp = await fetch(`/api/gameStates/activeGame/${getGameData.game_id}`, {
-    method: 'GET',
-});
+    const getGameDataResp  = await fetch(`/api/games/activeGame/${userId[1]}`, {
+        method: 'GET',
+    });
+    const getGameData = await getGameDataResp.json();
+    console.log(getGameData);
+    const getGameStateDataResp = await fetch(`/api/gameStates/activeGame/${getGameData.game_id}`, {
+        method: 'GET',
+    });
 //const getGameStateData = await getGameStateDataResp.json();
 console.log(getGameStateDataResp.json());
 const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {

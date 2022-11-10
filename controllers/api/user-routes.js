@@ -75,7 +75,7 @@ router.get('/:username', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    return req.session.username;
+    res.status(200).json([req.session.username, req.session.userId]);
   } catch (err) {
     return err
   }

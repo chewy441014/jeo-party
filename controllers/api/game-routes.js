@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 // });
 
 
-router.get('/:user_id', async (req, res) => {
+router.get('/activeGame/:user_id', async (req, res) => {
   try {
      const gameRoute = await Game.findOne(req.body, {
       where: {
