@@ -68,13 +68,15 @@ const getGame = async function (questionNumber, questionValue) {
     const getGameDataResp  = await fetch(`/api/games/activeGame/${userId[1]}`, {
         method: 'GET',
     });
+    console.log(getGameDataResp);
     const getGameData = await getGameDataResp.json();
-    console.log(getGameData);
+    console.log(getGameData[0].game_id);
 
-    const getGameStateDataResp = await fetch(`/api/gameStates/${getGameData.game_id}`, {
+    const getGameStateDataResp = await fetch(`/api/gameStates/activeGame/${getGameData[0].game_id}`, {
         method: 'GET',
     });
     const getGameStateData = await getGameStateDataResp.json();
+    console.log(getGameStateDataResp);
     const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {
         method: 'GET',
     });
@@ -120,7 +122,7 @@ const submitAnswer = async function (activeGame, correctAnswer, playerScore) {
 // Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
-    cardID = event.target.getAttribute("id");
+    cardID = event.target.id;
     console.log(cardID);
     event.currentTarget.style.backgroundColor= "black";
     // event.target.style.display= "none";
