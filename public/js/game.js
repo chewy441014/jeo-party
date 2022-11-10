@@ -6,6 +6,33 @@
 // add logic to update scores based on a correct/incorrect answer
 const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
+
+const checkAnswer = (answerInput, correctAnswer) => {
+    let answerBoolean = false;
+    if (answerInput.toLowerCase() === correctAnswer.toLowerCase()) {
+        answerBoolean = true;
+    }
+    return answerBoolean;
+};
+
+const submitAnswer = async function (correctAnswer) {
+    // Need API route to get correct answer
+    if (checkAnswer(document.getElementById('#answerText').value, correctAnswer)) {
+        document.getElementById('#answerText').reset();
+            if (req.session.myTurn) {
+                req.session.myTurn = false;
+            }
+            else {
+                req.session.myTurn = true;
+            }
+    }
+    else{
+        alert('Answer is incorrect');
+    }
+};
+
+
+// Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
     cardID = event.target.id;
@@ -86,8 +113,10 @@ const questionClickHandler = async function (event) {
     const questionText = await questionTextResp.json()
     console.log(questionText.question);
 
-    const questionBox = document.getElementById('question-text');
+    const questionBox = document.getElementById('#question-text');
     questionBox.textContent.replace(questionText.question);
+
+    document.getElementById('#submit-button').addEventListener('submit', submitAnswer(questionText.answer));
 
     console.log('clicked');
     console.log(questionNumber);
