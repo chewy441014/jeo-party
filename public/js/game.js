@@ -10,6 +10,8 @@ const { Game } = require("../../models");
 const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
 
+socket.emit() //on load emit 'username joined game'
+
 // Function to pull down game data into a local object in the scripts
 const getGame = async function () {
 const getGameDataResp  = await fetch(`/api/games/${req.session.username}`, {

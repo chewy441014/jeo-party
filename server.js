@@ -48,11 +48,11 @@ io.on('connection', (socket) => {
   console.log('connection for ', socket.id);
   socket.on('game_id', (data) => {
     // do stuff here
+    console.log('game_id', data)
   });
-});
-
-io.on('disconnect', function () {
-  console.log('user disconnected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 sequelize.sync({ force: false }).then(() => {
