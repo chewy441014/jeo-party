@@ -2,20 +2,6 @@ const router = require('express').Router();
 const { GameState } = require('../../models');
 
 // The `/api/categories` endpoint
-
-
-// find particular game route
-router.get('/:id', async (req, res) => {
-  try {
-    const gameStateRoute = await GameState.findByPk(req.params.id);
-    res.status(200).json(gameStateRoute);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-
-
 // create a new game
 router.post('/', async (req, res) => {
   try {
@@ -31,6 +17,35 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+router.get('/activeGame/:game_id', async (req, res) => {
+  try {
+    const gameRoute = await GameState.findAll(req.body, {
+      where: {
+        game_id: req.params.game_id
+      }
+    });
+    if (!gameRoute) {
+      res.status(400).json({ message: 'No game found with that id!' });
+      return;
+    }
+    res.status(200).json(gameRoute);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// find particular game route
+router.get('/:id', async (req, res) => {
+  try {
+    const gameStateRoute = await GameState.findByPk(req.params.id);
+    res.status(200).json(gameStateRoute);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 
 // update a game by its `id` value
 router.put('/:id', async (req, res) => {
