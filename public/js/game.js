@@ -15,10 +15,11 @@ const checkAnswer = (answerInput, correctAnswer) => {
     return answerBoolean;
 };
 
-const submitAnswer = async function (correctAnswer) {
+const submitAnswer = async function (correctAnswer, playerScore) {
     // Need API route to get correct answer
     if (checkAnswer(document.getElementById('#answerText').value, correctAnswer)) {
         document.getElementById('#answerText').reset();
+
             if (req.session.myTurn) {
                 req.session.myTurn = false;
             }
@@ -31,6 +32,11 @@ const submitAnswer = async function (correctAnswer) {
     }
 };
 
+// Function to pull down game data into a local object in the script
+//const getGameData();
+//Function to update the database with the local object
+//const updateGameData();
+
 
 // Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
@@ -38,66 +44,87 @@ const questionClickHandler = async function (event) {
     cardID = event.target.id;
     console.log(cardID);
     let questionNumber = 0;
+    let questionValue = 0;
     switch(cardID){
         case 'r1c1':
             questionNumber = 0;
+            questionValue = 200;
         break
         case 'r2c1':
             questionNumber = 1;
+            questionValue = 400;
         break
         case 'r3c1':
             questionNumber = 2;
+            questionValue = 600;
         break
         case 'r4c1':
             questionNumber = 3;
+            questionValue = 800;
         break
         case 'r1c2':
             questionNumber = 4;
+            questionValue = 200;
         break
         case 'r2c2':
             questionNumber = 5;
+            questionValue = 400;
         break
         case 'r3c2':
             questionNumber = 6;
+            questionValue = 600;
         break
         case 'r4c2':
             questionNumber = 7;
+            questionValue = 800;
         break
         case 'r1c3':
             questionNumber = 8;
+            questionValue = 200;
         break
         case 'r2c3':
             questionNumber = 9;
+            questionValue = 400;
         break
         case 'r3c3':
             questionNumber = 10;
+            questionValue = 600;
         break
         case 'r4c3':
             questionNumber = 11;
+            questionValue = 800;
         break
         case 'r1c4':
             questionNumber = 12;
+            questionValue = 200;
         break
         case 'r2c4':
             questionNumber = 13;
+            questionValue = 400;
         break
         case 'r3c4':
             questionNumber = 14;
+            questionValue = 600;
         break
         case 'r4c4':
             questionNumber = 15;
+            questionValue = 800;
         break
         case 'r1c5':
             questionNumber = 16;
+            quesitonValue = 200;
         break
         case 'r2c5':
             questionNumber = 17;
+            questionValue = 400;
         break
         case 'r3c5':
             questionNumber = 18;
+            questionValue = 600;
         break
         case 'r4c5':
             questionNumber = 19;
+            questionValue = 800;
         break
     };
     const gameID = req.session.id;
@@ -116,7 +143,7 @@ const questionClickHandler = async function (event) {
     const questionBox = document.getElementById('#question-text');
     questionBox.textContent.replace(questionText.question);
 
-    document.getElementById('#submit-button').addEventListener('submit', submitAnswer(questionText.answer));
+    document.getElementById('#submit-button').addEventListener('submit', submitAnswer(questionText.answer, questionValue));
 
     console.log('clicked');
     console.log(questionNumber);
