@@ -34,13 +34,15 @@ const createGameFn = async function (event) {
     method: 'GET'
   });
   const userData = await userResponse.json();
-  const getGameDataResp = await fetch(`/api/games/${userData[1]}`, {
+  console.log(userData)
+  const getGameDataResp = await fetch(`/api/games/activeGame/${userData[1]}`, {
     method: 'GET',
   });
   const gameData = await getGameDataResp.json();
+  console.log(gameData)
   if (getGameDataResp.ok) {
     alert('Cannot create duplicate game, join your current game.')
-    document.location.replace(`/game/`)
+    // document.location.replace(`/game/${gameData.game_id}`)
     return;
   }
   const gameID = UUID();
@@ -55,19 +57,21 @@ const createGameFn = async function (event) {
     }
   }
   const gameStateArr = questionIDs.map((gameState) => ({ question_id: gameState, game_id: gameID }))
-  await fetch('/api/gameStates/', {
+  const gamestateresponse = await fetch('/api/gameStates/', {
     method: 'POST',
     body: JSON.stringify(gameStateArr),
   });
   console.log(gameStateArr);
+  console.log(gamestateresponse);
   const response = await fetch('/api/games/', {
     method: 'POST',
     body: JSON.stringify({ game_id: gameID }),
     headers: { 'Content-Type': 'application/json' },
   });
+  console.log(response)
   if (response.ok) {
     // the game data has been saved to the data base, make another home route to route the user based on the gameid
-    document.location.replace(`/game/${gameID}`)
+    // document.location.replace(`/game/${gameID}`)
   } else {
     alert('Failed to create game');
   }

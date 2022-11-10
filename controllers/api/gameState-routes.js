@@ -5,6 +5,7 @@ const { GameState } = require('../../models');
 // create a new game
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body)
     const newGameState = await GameState.bulkCreate(req.body, {
       individualHooks: true,
       returning: true
