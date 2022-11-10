@@ -15,20 +15,22 @@ const joinGameFn = async function (event) {
   const gameID = document.querySelector('#gameId').value;
   // make a call to the api and then send the user to the url /game
   // to do get request looks for a game with ID and gets the game data and sends the user to the game view
-  const response = await fetch();
-
+  const response = await fetch('/api/games/', {
+    method: 'POST',
+    body: JSON.stringify({game_id: gameID}),
+    headers: {'Content-Type': 'application/json'},
+  });
   if (response.ok) {
-    res.status(200).render('game');
+    document.location.replace(`/game/${gameID}`)
   } else {
     alert(`Failed to join game with ID: ${gameID}`)
-    res.status(400);
   }
 }
 
 const createGameFn = async function (event) {
   event.preventDefault();
+
   const gameID = UUID();
-  console.log(gameID)
   // make a call to create a game object in the api
   // to do post request needs to send back confirmation all went well to start game and validation for user inputs required. 
   let completeList = false;
@@ -39,24 +41,21 @@ const createGameFn = async function (event) {
       completeList = true;
     }
   }
-  console.log('gamestates')
   const gameStateArr = questionIDs.map((gameState) => ({ question_id: gameState, game_id: gameID }))
   await fetch('/api/gameStates/', {
     method: 'POST',
     body: JSON.stringify(gameStateArr),
   });
-  console.log('games')
   const response = await fetch('/api/games/', {
     method: 'POST',
     body: JSON.stringify({game_id: gameID}),
     headers: {'Content-Type': 'application/json'},
   });
-  console.log(response)
-  console.log('ding1')
   if (response.ok) {
     // the game data has been saved to the data base, make another home route to route the user based on the gameid
-    console.log('ding')
     document.location.replace(`/game/${gameID}`)
+  } else {
+    alert('Failed to create game');
   }
 }
 

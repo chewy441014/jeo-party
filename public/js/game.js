@@ -30,7 +30,7 @@ function getCookie(name) {
     }
     
     // Return null if not found
-    return null;
+    return decodeURIComponent(cookieArr);
 };
 
 //Function to update the database with the local object
@@ -40,6 +40,8 @@ const updateGame = async function (activeGame) {
         body: JSON.stringify(activeGame),
     })
 };
+console.log(getCookie("userId"))
+socket.emit('player joined', `Player:  has joined.`) //on load emit 'username joined game'
 
 // Function to pull down game data into a local object in the scripts
 const getGame = async function (questionNumber, questionValue) {
