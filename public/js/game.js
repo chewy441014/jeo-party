@@ -59,12 +59,18 @@ const onLoad = async function () {
 
 // Function to pull down game data into a local object in the scripts
 const getGame = async function (questionNumber, questionValue) {
-    var userId = getCookie("userId");
-    const getGameDataResp = await fetch(`/api/games/${userId}`, {
+
+    const userResp = await fetch('/api/users', {
+        method: 'GET',
+    });
+    const userId = await userResp.json();;
+    console.log(userId);
+    const getGameDataResp  = await fetch(`/api/games/activeGame/${userId[1]}`, {
         method: 'GET',
     });
     const getGameData = await getGameDataResp.json();
     console.log(getGameData);
+
     const getGameStateDataResp = await fetch(`/api/gameStates/${getGameData.game_id}`, {
         method: 'GET',
     });
@@ -80,6 +86,7 @@ const getGame = async function (questionNumber, questionValue) {
 
     document.getElementById('#submit-button').addEventListener('submit', submitAnswer(activeGame, questionText.answer, questionValue));
     return activeGame = { user_id: getGameData.user_id, points: getGameData.points, game_id: getGameData.game_id };
+
 };
 
 

@@ -59,6 +59,7 @@ const createGameFn = async function (event) {
     method: 'POST',
     body: JSON.stringify(gameStateArr),
   });
+  console.log(gameStateArr);
   const response = await fetch('/api/games/', {
     method: 'POST',
     body: JSON.stringify({ game_id: gameID }),
