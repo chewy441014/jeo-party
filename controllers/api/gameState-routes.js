@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(gameStateRoute);
   } catch (err) {
     res.status(500).json(err);
-    }
+  }
 });
 
 
@@ -23,9 +23,10 @@ router.post('/', async (req, res) => {
       individualHooks: true,
       returning: true
     });
-    res.status(200).json(newGameState);
     req.session.save(() => {
-      req.session.id = newGameState.id;});
+      req.session.id = newGameState.id;
+    });
+    res.status(200).json(newGameState);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -40,9 +41,9 @@ router.put('/:id', async (req, res) => {
       },
     });
     if (!updateGameState) {
-        res.status(404).json({ message: 'No GameState found with that id!' });
-        return;
-      }
+      res.status(404).json({ message: 'No GameState found with that id!' });
+      return;
+    }
     res.status(200).json(updateGameState);
   } catch (err) {
     res.status(400).json(err);
