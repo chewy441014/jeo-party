@@ -46,9 +46,9 @@ app.use(routes);
 
 io.on('connection', (socket) => {
   console.log('connection for ', socket.id);
-  socket.on('game_id', (data) => {
+  socket.on('player joined', (data) => {
     // do stuff here
-    console.log('game_id', data)
+    console.log('player joined', data)
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');

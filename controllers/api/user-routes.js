@@ -73,6 +73,14 @@ router.get('/:username', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    return req.session.username;
+  } catch (err) {
+    return err
+  }
+})
+
 //Creating a new user and password
 router.post('/', async (req, res) => {
   try {
