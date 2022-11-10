@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-//TODO - potentially update later
-router.get('/game', async (req, res) => {
-  res.render('game');
-});
+// //TODO - potentially update later
+// router.get('/game', async (req, res) => {
+//   res.render('game');
+// });
 
 router.get('/game/:id', async (req, res) => {
   req.session.save(() => {
