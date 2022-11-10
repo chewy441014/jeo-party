@@ -45,11 +45,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
 io.on('connection', (socket) => {
-  console.log('connection for ', socket.id);
-  socket.on('player joined', (data) => {
-    // do stuff here
-    console.log('player joined', data)
+  socket.on('player joining', (data) => {
+    socket.broadcast.emit('player joined', data);
   });
+  socket.on('send users', (data) => {
+    socket.broadcast.emit('send users', data)
+  })
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
