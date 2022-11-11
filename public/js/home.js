@@ -14,7 +14,7 @@ const joinGameFn = async function (event) {
   event.preventDefault();
   const gameID = document.querySelector('#gameId').value;
   // make a call to the api and then send the user to the url /game
-  // to do get request looks for a game with ID and gets the game data and sends the user to the game view
+  //get request looks for a game with ID and gets the game data and sends the user to the game view
   const response = await fetch('/api/games/', {
     method: 'POST',
     body: JSON.stringify({ game_id: gameID }),
@@ -34,12 +34,10 @@ const createGameFn = async function (event) {
     method: 'GET'
   });
   const userData = await userResponse.json();
-  console.log(userData)
   const getGameDataResp = await fetch(`/api/games/activeGame/${userData[1]}`, {
     method: 'GET',
   });
   const gameData = await getGameDataResp.json();
-  console.log(gameData)
   if (getGameDataResp.ok) {
     alert('Cannot create duplicate game, join your current game.')
     document.location.replace(`/game/${gameData.game_id}`)
@@ -47,7 +45,7 @@ const createGameFn = async function (event) {
   }
   const gameID = UUID();
   // make a call to create a game object in the api
-  // to do post request needs to send back confirmation all went well to start game and validation for user inputs required. 
+  // post request needs to send back confirmation all went well to start game and validation for user inputs required. 
   let completeList = false;
   let questionIDs;
   while (!completeList) {
@@ -62,14 +60,11 @@ const createGameFn = async function (event) {
     body: JSON.stringify(gameStateArr),
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log(gameStateArr);
-  console.log(gamestateresponse);
   const response = await fetch('/api/games/', {
     method: 'POST',
     body: JSON.stringify({ game_id: gameID }),
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log(response)
   if (response.ok) {
     // the game data has been saved to the data base, make another home route to route the user based on the gameid
     document.location.replace(`/game/${gameID}`)

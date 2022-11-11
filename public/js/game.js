@@ -1,16 +1,6 @@
-// Append questions to each value box in the page
-// add buzzer function to listen for the first users input with a "buzzedIn" boolean in the cookie
-// add button click functionality to populate each question into the given field
-// add logic to check answers that are given by the users
-//      add a message telling the user whether their score was correct or incorrect
 
-//const { Game } = require("../../models");
-
-// add logic to update scores based on a correct/incorrect answer
 const socket = io("http://localhost:3001");
-//let {Game} = require('../../models')
 
-let activeGame;
 let answer;
 let questionValue;
 const players = [];
@@ -18,13 +8,12 @@ let turn = 0;
 let playerTurn = true;
 let player1score = 0;
 let player2score = 0;
+let turnNumber = 0;
 
 
 
 
 const onLoad = async function () {
-    console.log((document.location.pathname).split('/')[2]);
-    console.log('look up');
     const response = await fetch('/api/users', {
         method: 'GET'
     });
@@ -55,7 +44,6 @@ const onLoad = async function () {
 }
 
 const getAllQuestions = async function () {
-    console.log(document.location.pathname);
     const getQuestions = await fetch(`/api/gameStates/activeGame/${(document.location.pathname).split('/')[2]}`, {
         method: 'GET',
     });
@@ -96,19 +84,15 @@ const getGame = async function (questionNumber) {
         method: 'GET',
     });
     const userId = await userResp.json();
-    console.log(userId);
     const getGameDataResp = await fetch(`/api/games/activeGame/${userId[1]}`, {
         method: 'GET',
     });
-    console.log(getGameDataResp);
     const getGameData = await getGameDataResp.json();
-    console.log(getGameData[0].game_id);
 
     const getGameStateDataResp = await fetch(`/api/gameStates/activeGame/${getGameData[0].game_id}`, {
         method: 'GET',
     });
     const getGameStateData = await getGameStateDataResp.json();
-    console.log(getGameStateDataResp);
     const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {
         method: 'GET',
         where: {
@@ -116,9 +100,7 @@ const getGame = async function (questionNumber) {
         }
     });
     const questionText = await questionTextResp.json()
-    console.log(questionText.question);
     answer = questionText.answer;
-    console.log(answer);
     getGameStateData[questionNumber].was_answered = true;
     const updateQuestionAnswered = await fetch(`/api/gameStates/${getGameStateData[questionNumber].id}`, {
         method: 'PUT',
@@ -128,11 +110,7 @@ const getGame = async function (questionNumber) {
     console.log(updateQuestionAnswered)
 
     document.getElementById('question-text').innerHTML = questionText.question;
-    //const userAnswer = document.getElementById('answerText').value;
-    // Some logic to wait for the user to answer the question and hit the button, inside submitAsnwer is where we will switch turns
-    //document.querySelector('#submit-button').addEventListener('click', submitAnswer(userAnswer, answer,));
-    //console.log(userAnswer);
-    return activeGame = { user_id: userId[1], points: getGameData[0].points, game_id: getGameData[0].game_id };
+    return;
 };
 
 
@@ -155,8 +133,9 @@ function checkAnswer(answerInput, correctAnswer) {
 };
 
 const submitAnswer = async function(event) {
-    // Need API route to get correct answer
+    
     if (checkAnswer(document.getElementById('answerText').value, answer)) {
+        turnNumber++;
         document.getElementById('answerText').value = "";
         //addScore(points, playerScore);
         if (playerTurn) {
@@ -183,9 +162,11 @@ const submitAnswer = async function(event) {
             document.getElementById('p2score').innerHTML = player2score;
             playerTurn = true;
         }
-        //subtractScore(points, playerScore)
+        //ends the game
+        if(turnNumber === 20){
+            alert('GameOver!');
+        }
     }
-    //updateGame(points);
     // update turn with socket.io
     socket.emit('turn end', turn);
     removeAllButtons();
@@ -198,7 +179,6 @@ const questionClickHandler = async function (event) {
     cardID = event.target.getAttribute("id");
     console.log(cardID);
     event.currentTarget.style.backgroundColor = "black";
-    // event.target.style.display= "none";
     let questionNumber;
     switch (cardID) {
         case 'q0':
@@ -284,8 +264,6 @@ const questionClickHandler = async function (event) {
     };
     getGame(questionNumber, questionValue);
 
-    console.log('clicked');
-    console.log(questionNumber);
 };
 
 onLoad();
