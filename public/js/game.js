@@ -1,5 +1,5 @@
 
-const socket = io("http://localhost:3001");
+const socket = io("https://jeo-party-parody.herokuapp.com/");
 
 let answer;
 let questionValue;
