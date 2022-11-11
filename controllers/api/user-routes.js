@@ -3,6 +3,31 @@ const { User } = require('../../models');
 
 // The `/api/categories` endpoint
 
+router.get('/whosTurn/myTurn', async (req, res) => {
+  // find one user by its `username` value
+  try {
+    const userRoute = await User.findOne(req.session.playerTurn);
+    if (!userRoute) {
+      res.status(404).json({ message: 'No User found with that id!' });
+      return;
+    }
+    res.status(200).json(userRoute);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.put('/whosTurn/switchTurn', async (req, res) => {
+  try{if(req.session.playerTurn){
+    req.session.playerTurn = false;
+  }
+  else{
+    req.session.playerTurn = true;
+  }
+} catch(err) {
+  res.status(500).json(err);
+}
+});
 
 //login button --TODO
 router.post('/login', async (req, res) => {
@@ -73,6 +98,7 @@ router.get('/:username', async (req, res) => {
   }
 });
 
+
 router.get('/', (req, res) => {
   try {
     res.status(200).json([req.session.username, req.session.userId]);
@@ -89,12 +115,14 @@ router.post('/', async (req, res) => {
       username: req.body.username,
       password: req.body.password,
       loggedIn: false,
+      playerTurn: true,
     });
     console.log(newUser)
     req.session.save(() => {
       req.session.userId = newUser.id;
       req.session.username = newUser.username;
       req.session.loggedIn = true;
+      req.session.playerTurn = true;
 
       res.status(200).json(newUser);
     });
