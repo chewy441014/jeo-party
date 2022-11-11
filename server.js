@@ -50,7 +50,12 @@ io.on('connection', (socket) => {
   });
   socket.on('send users', (data) => {
     socket.broadcast.emit('send users', data)
-  })
+  });
+  socket.on('turn end', (data) => {
+    let turn = parseInt(data);
+    turn ++;
+    socket.broadcast.emit('turn start', turn);
+  });
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
