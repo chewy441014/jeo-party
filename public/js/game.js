@@ -105,7 +105,7 @@ const getGame = async function (questionNumber) {
         method: 'GET',
     });
     const getGameStateData = await getGameStateDataResp.json();
-    console.log(getGameStateDataResp);
+    console.log(getGameStateData);
     const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {
         method: 'GET',
         where: {
