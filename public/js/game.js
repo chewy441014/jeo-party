@@ -18,15 +18,10 @@ let turn = 0;
 
 
 
-//Function to update the database with the local object
-const updateGame = async function (activeGame) {
-    const updateGameData = await fetch(`/api/games/${activeGame.user_id}`, {
-        method: 'PUT',
-        body: JSON.stringify(activeGame),
-    })
-};
 
 const onLoad = async function () {
+    console.log((document.location.pathname).split('/')[2]);
+    console.log('look up');
     const response = await fetch('/api/users', {
         method: 'GET'
     });
@@ -50,25 +45,39 @@ const onLoad = async function () {
     });
     socket.on('turn start', (data) => {
         alert(`It's your turn, pick a question`);
-        // setup event listeners for all unanswered questions
-        // make a new api fetch request to get all question from game id where was_answered is false
+        getAllQuestions();
+        document.querySelector('#submit-button').addEventListener('click', submitAnswer);
+
     })
 }
 
+const getAllQuestions = async function () {
+    console.log(document.location.pathname);
+    const getQuestions = await fetch(`/api/gameStates/activeGame/${(document.location.pathname).split('/')[2]}`, {
+        method: 'GET',
+    });
+    const getQuestionsResp = await getQuestions.json();
+    getQuestionsResp.forEach(element => {
+        if (element.was_answered) {
+            document.querySelector(`#q${element.id % 20}`).style.backgroundColor = 'black';
+        }
+        else {
+            document.querySelector(`#q${element.id % 20}`).addEventListener('click', questionClickHandler);
+        }
+    });
+}
+
 const setupAllButtons = async function () {
-    for (var i = 1; i <= 4; i++) {
-        for (var j = 1; j <= 5; j++) {
-            document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
-        };
+    for (var i = 0; i < 20; i++) {
+
+        document.querySelector(`#q${i}`).addEventListener('click', questionClickHandler);
     };
     document.querySelector('#submit-button').addEventListener('click', submitAnswer);
 }
 
 const removeAllButtons = async function () {
-    for (var i = 1; i <= 4; i++) {
-        for (var j = 1; j <= 5; j++) {
-            document.querySelector(`#r${i}c${j}`).removeEventListener('click', questionClickHandler);
-        };
+    for (var i = 0; i < 20; i++) {
+        document.querySelector(`#q${i}`).removeEventListener('click', questionClickHandler);
     };
     document.querySelector('#submit-button').removeEventListener('click', submitAnswer);
 }
@@ -99,13 +108,16 @@ const getGame = async function (questionNumber) {
     console.log(getGameStateDataResp);
     const questionTextResp = await fetch(`/api/questions/${getGameStateData[questionNumber].question_id}`, {
         method: 'GET',
+        where: {
+            was_answered: false,
+        }
     });
     const questionText = await questionTextResp.json()
     console.log(questionText.question);
     answer = questionText.answer;
     console.log(answer);
     getGameStateData[questionNumber].was_answered = true;
-    const updateQuestionAnswered = await fetch(`/api/gameStates/${getGameStateData[questionNumber].id}`,{
+    const updateQuestionAnswered = await fetch(`/api/gameStates/${getGameStateData[questionNumber].id}`, {
         method: 'PUT',
         body: JSON.stringify(getGameStateData[questionNumber]),
         headers: { 'Content-Type': 'application/json' }
@@ -167,86 +179,87 @@ const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
     cardID = event.target.getAttribute("id");
     console.log(cardID);
-    event.currentTarget.style.backgroundColor= "black";
-        let questionNumber = 0;
+    event.currentTarget.style.backgroundColor = "black";
+    // event.target.style.display= "none";
+    let questionNumber;
     switch (cardID) {
-        case 'r1c1':
+        case 'q0':
             questionNumber = 0;
             questionValue = 200;
             break
-        case 'r2c1':
+        case 'q1':
             questionNumber = 1;
             questionValue = 400;
             break
-        case 'r3c1':
+        case 'q2':
             questionNumber = 2;
             questionValue = 600;
             break
-        case 'r4c1':
+        case 'q3':
             questionNumber = 3;
             questionValue = 800;
             break
-        case 'r1c2':
+        case 'q4':
             questionNumber = 4;
             questionValue = 200;
             break
-        case 'r2c2':
+        case 'q5':
             questionNumber = 5;
             questionValue = 400;
             break
-        case 'r3c2':
+        case 'q6':
             questionNumber = 6;
             questionValue = 600;
             break
-        case 'r4c2':
+        case 'q7':
             questionNumber = 7;
             questionValue = 800;
             break
-        case 'r1c3':
+        case 'q8':
             questionNumber = 8;
             questionValue = 200;
             break
-        case 'r2c3':
+        case 'q9':
             questionNumber = 9;
             questionValue = 400;
             break
-        case 'r3c3':
+        case 'q10':
             questionNumber = 10;
             questionValue = 600;
             break
-        case 'r4c3':
+        case 'q11':
             questionNumber = 11;
             questionValue = 800;
             break
-        case 'r1c4':
+        case 'q12':
             questionNumber = 12;
             questionValue = 200;
             break
-        case 'r2c4':
+        case 'q13':
             questionNumber = 13;
             questionValue = 400;
             break
-        case 'r3c4':
+        case 'q14':
             questionNumber = 14;
             questionValue = 600;
             break
-        case 'r4c4':
+        case 'q15':
             questionNumber = 15;
             questionValue = 800;
             break
-        case 'r1c5':
+        case 'q16':
             questionNumber = 16;
             quesitonValue = 200;
             break
-        case 'r2c5':
+        case 'q17':
             questionNumber = 17;
             questionValue = 400;
             break
-        case 'r3c5':
+        case 'q18':
             questionNumber = 18;
             questionValue = 600;
             break
-        case 'r4c5':
+        case 'q19':
             questionNumber = 19;
             questionValue = 800;
             break
