@@ -1,77 +1,72 @@
+<div class= "high-scores-page">
+  <div class="main-highscores">
+    <table class="table table-striped">
+      <thead>
+        <th class="main-highscores">Ultimate High-Scores</th>
+        <tr>
 
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">High-scores</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>000</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>000</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<div class="main-highscores">
-<table class="table table-striped">
-  <thead>
-    <th class="main-highscores">Ultimate High-Scores</th>
-    <tr>
-      
-      <th scope="col">#</th>
-      <th scope="col">Username</th>
-      <th scope="col">High-scores</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>000</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>000</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>000</td>
-    </tr>
-  </tbody>
-</table>
+  <!--Personal HighScores-->
+
+  <div class="high-scores-tables">
+    <table class="table table-striped">
+      <thead>
+        <th class="main-highscores">Personal High-Scores</th>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Scores</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>000</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Mark</td>
+          <td>000</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Mark</td>
+          <td>000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<!--Personal HighScores-->
-
-<div class="high-scores-tables">
-<table class="table table-striped">
-  <thead>
-    <th class="main-highscores">Personal High-Scores</th>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Username</th>
-      <th scope="col">Scores</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>000</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Mark</td>
-      <td>000</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Mark</td>
-      <td>000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<div>
-{{#if loggedIn}}
- 
+  {{#if loggedIn}}
+  <div>
   <a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
-
-{{else}}
-
-  {{!-- <a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a> --}}
+  </div>
+  {{else}}
 
   {{/if}}
-</div>
-</div>

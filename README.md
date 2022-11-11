@@ -2,7 +2,7 @@
 
 ## Description
 Play a parody of Jeopardy with a friend. <br><br>
-After signing up and starting the game with your opponent,  player 1 can select a category and monetary value. To open a question on the board, click on the desired point value icon. The question is presented, and player 1 will have 60 seconds to answer the question. If they answer the question correctly, they will gain the appropriate points and the turn passes to Player 2. If player 1 answers incorrectly, they will lose points and player 2 will have a chance to answer the same question. Play continues until all the questions from the board have been selected.
+After signing up and starting the game with your opponent,  player 1 can select a category and monetary value. To open a question on the board, click on the desired point value icon. If they answer the question correctly, they will gain the appropriate points and the turn passes to Player 2. If player 1 answers incorrectly, they will lose points and the turn passes toPlay continues until all the questions from the board have been selected.
 
 
 ## Usage
