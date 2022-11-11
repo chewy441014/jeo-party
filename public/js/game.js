@@ -11,32 +11,15 @@ const socket = io("http://localhost:3001");
 //let {Game} = require('../../models')
 
 let activeGame;
+let answer;
+let questionValue;
 const players = [];
 
-//From TutorialRepublic
-function getCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
 
-    // Loop through the array elements
-    for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if (name == cookiePair[0].trim()) {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-
-    // Return null if not found
-    return decodeURIComponent(cookieArr);
-};
 
 //Function to update the database with the local object
 const updateGame = async function (activeGame) {
-    const updateGameData = await fetch(`/api/games/${getCookie("userId")}`, {
+    const updateGameData = await fetch(`/api/games/${activeGame.user_id}`, {
         method: 'PUT',
         body: JSON.stringify(activeGame),
     })
@@ -50,11 +33,11 @@ const onLoad = async function () {
     socket.emit('player joining', `${userdata[0]}`) //on load emit 'username joined game'
     socket.on('player joined', (data) => {
         console.log('Both players present, begin game.')
-        for (var i = 1; i <= 4; i++) {
-            for (var j = 1; j <= 5; j++) {
-                document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
-            };
+    for (var i = 1; i <= 4; i++) {
+        for (var j = 1; j <= 5; j++) {
+            document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
         };
+    };
         // make player 1 buttons clickable
         players.push(userdata[0]);
         players.push(data);
@@ -63,12 +46,12 @@ const onLoad = async function () {
     socket.on('send users', (data) => {
         if (players.length !== data.length) {
             players.push(...data)
-        }
+}
     })
 }
 
 // Function to pull down game data into a local object in the scripts
-const getGame = async function (questionNumber, questionValue) {
+const getGame = async function (questionNumber) {
 
     const userResp = await fetch('/api/users', {
         method: 'GET',
@@ -92,29 +75,45 @@ const getGame = async function (questionNumber, questionValue) {
     });
     const questionText = await questionTextResp.json()
     console.log(questionText.question);
+    answer = questionText.answer;
+    console.log(answer);
 
-    const questionBox = document.getElementById('#question-text');
-    questionBox.textContent.replace(questionText.question);
-
-    document.getElementById('#submit-button').addEventListener('submit', submitAnswer(activeGame, questionText.answer, questionValue));
-    return activeGame = { user_id: getGameData.user_id, points: getGameData.points, game_id: getGameData.game_id };
+    document.getElementById('question-text').innerHTML = questionText.question;
+    const userAnswer = document.getElementById('answerText').value;
+    // Some logic to wait for the user to answer the question and hit the button, inside submitAsnwer is where we will switch turns
+    if (!(userAnswer === "")){
+        document.getElementById('submit-button').addEventListener('click', submitAnswer(userAnswer, getGameData[0].points, answer, questionValue));
+        console.log(userAnswer);
+    };
+    return activeGame = { user_id: userId[1], points: getGameData[0].points, game_id: getGameData[0].game_id };
+    
 
 };
+ 
 
+function addScore(value, currentScore){
+    currentScore = value + currentScore;
+    return currentScore;
+};
 
-const checkAnswer = (answerInput, correctAnswer) => {
+function subtractScore(value, currentScore){
+    currentScore = currentScore - value;
+    return currentScore;
+};
+
+function checkAnswer(answerInput, correctAnswer){
     let answerBoolean = false;
-    if (answerInput.toLowerCase() === correctAnswer.toLowerCase()) {
+    if (answerInput === correctAnswer) {
         answerBoolean = true;
     }
     return answerBoolean;
 };
 
-const submitAnswer = async function (activeGame, correctAnswer, playerScore) {
+function submitAnswer(userAnswer, points, correctAnswer, playerScore) {
     // Need API route to get correct answer
-    if (checkAnswer(document.getElementById('#answerText').value, correctAnswer)) {
-        document.getElementById('#answerText').reset();
-        addScore(activeGame.points, playerScore);
+    if (checkAnswer(userAnswer, correctAnswer)) {
+        document.getElementById('answerText').reset();
+        addScore(points, playerScore);
         if (req.session.myTurn) {
             req.session.myTurn = false;
         }
@@ -124,9 +123,9 @@ const submitAnswer = async function (activeGame, correctAnswer, playerScore) {
     }
     else {
         alert('Answer is incorrect');
-        subtractScore(activeGame.points, playerScore)
+        subtractScore(points, playerScore)
     }
-    updateGame(activeGame);
+    updateGame(points);
 };
 
 // Function to get the selected question from the database to populate on the page
@@ -137,7 +136,6 @@ const questionClickHandler = async function (event) {
     event.currentTarget.style.backgroundColor= "black";
     // event.target.style.display= "none";
     let questionNumber = 0;
-    let questionValue = 0;
     switch (cardID) {
         case 'r1c1':
             questionNumber = 0;
