@@ -15,6 +15,9 @@ let answer;
 let questionValue;
 const players = [];
 let turn = 0;
+let playerTurn = true;
+let player1score = 0;
+let player2score = 0;
 
 
 
@@ -92,7 +95,7 @@ const getGame = async function (questionNumber) {
     const userResp = await fetch('/api/users', {
         method: 'GET',
     });
-    const userId = await userResp.json();;
+    const userId = await userResp.json();
     console.log(userId);
     const getGameDataResp = await fetch(`/api/games/activeGame/${userId[1]}`, {
         method: 'GET',
@@ -151,20 +154,35 @@ function checkAnswer(answerInput, correctAnswer) {
     return answerBoolean;
 };
 
-function submitAnswer(event) {
+const submitAnswer = async function(event) {
     // Need API route to get correct answer
     if (checkAnswer(document.getElementById('answerText').value, answer)) {
         document.getElementById('answerText').value = "";
         //addScore(points, playerScore);
-        //if (req.session.myTurn) {
-        // req.session.myTurn = false;
-        //}
-        //else {
-        //req.session.myTurn = true;
-        //}
+        if (playerTurn) {
+            player1score = addScore(player1score, questionValue);
+            document.getElementById('p1score').innerHTML = player1score;
+            playerTurn = false;
+
+        }
+        else {
+            player2score = addScore(player2score, questionValue)
+            document.getElementById('p2score').innerHTML = player2score;
+            playerTurn = true;
+        }
     }
     else {
         alert('Answer is incorrect');
+        if (playerTurn) {
+            player1score = subtractScore(player1score, questionValue);
+            document.getElementById('p1score').innerHTML = player1score;
+            playerTurn = false;
+        }
+        else {
+            player2score = subtractScore(player2score, questionValue)
+            document.getElementById('p2score').innerHTML = player2score;
+            playerTurn = true;
+        }
         //subtractScore(points, playerScore)
     }
     //updateGame(points);
