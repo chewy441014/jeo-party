@@ -33,11 +33,12 @@ const onLoad = async function () {
     socket.emit('player joining', `${userdata[0]}`) //on load emit 'username joined game'
     socket.on('player joined', (data) => {
         console.log('Both players present, begin game.')
-    for (var i = 1; i <= 4; i++) {
-        for (var j = 1; j <= 5; j++) {
-            document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= 5; j++) {
+                document.querySelector(`#r${i}c${j}`).addEventListener('click', questionClickHandler);
+            };
         };
-    };
+        document.querySelector('#submit-button').addEventListener('click', submitAnswer);
         // make player 1 buttons clickable
         players.push(userdata[0]);
         players.push(data);
@@ -46,7 +47,7 @@ const onLoad = async function () {
     socket.on('send users', (data) => {
         if (players.length !== data.length) {
             players.push(...data)
-}
+        }
     })
 }
 
@@ -58,7 +59,7 @@ const getGame = async function (questionNumber) {
     });
     const userId = await userResp.json();;
     console.log(userId);
-    const getGameDataResp  = await fetch(`/api/games/activeGame/${userId[1]}`, {
+    const getGameDataResp = await fetch(`/api/games/activeGame/${userId[1]}`, {
         method: 'GET',
     });
     console.log(getGameDataResp);
@@ -79,29 +80,27 @@ const getGame = async function (questionNumber) {
     console.log(answer);
 
     document.getElementById('question-text').innerHTML = questionText.question;
-    const userAnswer = document.getElementById('answerText').value;
+    //const userAnswer = document.getElementById('answerText').value;
     // Some logic to wait for the user to answer the question and hit the button, inside submitAsnwer is where we will switch turns
-    if (!(userAnswer === "")){
-        document.getElementById('submit-button').addEventListener('click', submitAnswer(userAnswer, getGameData[0].points, answer, questionValue));
-        console.log(userAnswer);
-    };
+    //document.querySelector('#submit-button').addEventListener('click', submitAnswer(userAnswer, answer,));
+    //console.log(userAnswer);
     return activeGame = { user_id: userId[1], points: getGameData[0].points, game_id: getGameData[0].game_id };
-    
+
 
 };
- 
 
-function addScore(value, currentScore){
+
+function addScore(value, currentScore) {
     currentScore = value + currentScore;
     return currentScore;
 };
 
-function subtractScore(value, currentScore){
+function subtractScore(value, currentScore) {
     currentScore = currentScore - value;
     return currentScore;
 };
 
-function checkAnswer(answerInput, correctAnswer){
+function checkAnswer(answerInput, correctAnswer) {
     let answerBoolean = false;
     if (answerInput === correctAnswer) {
         answerBoolean = true;
@@ -109,23 +108,23 @@ function checkAnswer(answerInput, correctAnswer){
     return answerBoolean;
 };
 
-function submitAnswer(userAnswer, points, correctAnswer, playerScore) {
+function submitAnswer(event) {
     // Need API route to get correct answer
-    if (checkAnswer(userAnswer, correctAnswer)) {
-        document.getElementById('answerText').reset();
-        addScore(points, playerScore);
-        if (req.session.myTurn) {
-            req.session.myTurn = false;
-        }
-        else {
-            req.session.myTurn = true;
-        }
+    if (checkAnswer(document.getElementById('answerText').value, answer)) {
+        document.getElementById('answerText').value = "";
+        //addScore(points, playerScore);
+        //if (req.session.myTurn) {
+           // req.session.myTurn = false;
+        //}
+        //else {
+            //req.session.myTurn = true;
+        //}
     }
     else {
         alert('Answer is incorrect');
-        subtractScore(points, playerScore)
+        //subtractScore(points, playerScore)
     }
-    updateGame(points);
+    //updateGame(points);
 };
 
 // Function to get the selected question from the database to populate on the page
@@ -133,7 +132,7 @@ const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
     cardID = event.target.id;
     console.log(cardID);
-    event.currentTarget.style.backgroundColor= "black";
+    event.currentTarget.style.backgroundColor = "black";
     // event.target.style.display= "none";
     let questionNumber = 0;
     switch (cardID) {
