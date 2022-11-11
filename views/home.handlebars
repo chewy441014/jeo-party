@@ -1,9 +1,28 @@
-<div class="container newGameContainer">
-    <h3>Enter Game ID: </h3>
-    <input type="text" id="gameId" value=""><button type="button" class="btn btn-primary btn-sm" id="joinGame">GO!</button> </br>
-    <div class="container mt-3">
-        <button type="button" class="btn btn-primary" id="createGame">Create New Game</button>
-        <!-- Future Improvement: Add number of players, and options for filtering categories -->
+<div class="homePage">
+    <div class="container newGameContainer homeContainer">
+        <h3>Enter Game ID: </h3>
+        <input type="text" id="gameId" value=""><button type="button" class="btn btn-primary btn-sm"
+            id="joinGame">GO!</button> </br>
+        <div class="container mt-3">
+            <button type="button" class="btn btn-primary" id="createGame">Create New Game</button>
+            <!-- Future Improvement: Add number of players, and options for filtering categories -->
+        </div>
+    </div>
+
+    <div class="container homeContainer rulesContainer">
+        <h3>How to Play: </h3>
+        <div class="container mt-3">
+            <ol>
+                <li>Enter your game ID from a friend or create a new game</li>
+                <li>You will see a board populated with 5 random categories and 4 random questions for each category.</li>
+                <li>When it is your turn, pick an amount under a category of your choice.</li>
+                <li>Once a question is chosen, you will have 60 seconds to answer and click submit.</li>
+                <li>Correct answers will award you points AND incorrect answers will lose you points.</li>
+                <li>NOTE: You do not have to answer as a question.</li>
+                <li>You and your opponent will take turns answering each question on the board and will have a chance to answer the question your opponent missed.</li>
+                <li>When all the questions have been answered, your scores will be totaled and a winner declared.</li>
+            </ol>
+        </div>
     </div>
 </div>
 <script src="/js/home.js"></script>

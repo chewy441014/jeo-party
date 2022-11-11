@@ -165,12 +165,10 @@ function submitAnswer(event) {
 // Function to get the selected question from the database to populate on the page
 const questionClickHandler = async function (event) {
     // use event.target to get the id of the button that was clicked, and retrieve the question corresponding to this button
-    cardID = event.target.id;
+    cardID = event.target.getAttribute("id");
     console.log(cardID);
-    event.currentTarget.style.backgroundColor = "black";
-    event.target.removeEventListener('click', questionClickHandler);
-    // event.target.style.display= "none";
-    let questionNumber = 0;
+    event.currentTarget.style.backgroundColor= "black";
+        let questionNumber = 0;
     switch (cardID) {
         case 'r1c1':
             questionNumber = 0;
