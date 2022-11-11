@@ -1,11 +1,10 @@
 const sequelize = require('../config/connection');
-const JepQuestion = require('../models/Questions');
+const Question = require('../models/Questions');
 const questionData = require('./jeopardy_qs.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
-
-  await JepQuestion.bulkCreate(questionData, {
+  await Question.bulkCreate(questionData.slice(0,1000), {
     individualHooks: true,
     returning: true,
   });
