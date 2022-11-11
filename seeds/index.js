@@ -1,6 +1,7 @@
 const sequelize = require('../config/connection');
 const Question = require('../models/Questions');
 const questionData = require('./jeopardy_qs.json');
+const smallQuestionData = questionData.slice(0,1000);
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
