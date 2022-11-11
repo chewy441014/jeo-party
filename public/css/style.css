@@ -304,16 +304,7 @@ h1 {
 	display: block;
 	color: rgb(11, 8, 8);
 	text-align: center;
-	padding: 60px 16px;
-	text-decoration: none;
-	font-size: 35px;
-}
-
-#id {
-	display: block;
-	color: rgb(11, 8, 8);
-	text-align: center;
-	padding: 60px 16px;
+	padding: 20px 16px;
 	text-decoration: none;
 	font-size: 35px;
 }
@@ -322,7 +313,7 @@ h1 {
 	display: block;
 	color: rgb(11, 8, 8);
 	text-align: center;
-	padding: 30px 16px;
+	padding: 20px 16px;
 	text-decoration: none;
 	font-size: 35px;
 }
@@ -331,7 +322,7 @@ h1 {
 	display: block;
 	color: rgb(11, 8, 8);
 	text-align: center;
-	padding: 60px 16px;
+	padding: 20px 16px;
 	text-decoration: none;
 	font-size: 35px;
 }
@@ -414,7 +405,9 @@ a:hover {
 } 
 
 
-/* Table High-Scores */
+/* High-Scores */
+
+
 
 .table  {
   display: flex;
@@ -423,8 +416,9 @@ a:hover {
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 2px 10px var(--darkblue);
-  width: 400px;
-  padding: 30px 40px;
+  width: 900px;
+  height: 800px;
+  padding: 10px 20px;
   background-color: floralwhite;
   font-family: ITC_korinna, sans-serif;
 
@@ -435,11 +429,19 @@ a:hover {
 .high-scores-tables {
   display: flex;
   justify-content: space-evenly;
+  /* box-sizing: content-box; */
+ width: 100%;
+ 
+  padding: 5px;
 
 }
 
 .main-highscores {
-  color: red;
-  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  /* box-sizing: content-box; */
+width: 100%;
 
-}
+padding: 5px;
+
+} 

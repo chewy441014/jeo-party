@@ -1,4 +1,6 @@
-<div class="high-scores-tables">
+
+
+<div class="main-highscores">
 <table class="table table-striped">
   <thead>
     <th class="main-highscores">Ultimate High-Scores</th>
@@ -27,13 +29,14 @@
     </tr>
   </tbody>
 </table>
-
+</div>
 
 <!--Personal HighScores-->
 
-
+<div class="high-scores-tables">
 <table class="table table-striped">
   <thead>
+    <th class="main-highscores">Personal High-Scores</th>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Username</th>
@@ -60,15 +63,15 @@
 </table>
 </div>
 
-
+<div>
 {{#if loggedIn}}
-  <div>
+ 
   <a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
-  </div>
+
 {{else}}
-  <div>
+
   {{!-- <a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a> --}}
-  </div>
+
   {{/if}}
 </div>
 </div>
