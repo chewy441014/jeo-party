@@ -64,6 +64,7 @@ const onLoad = async function () {
         if (players.length !== data.length) {
             players.push(...data)
         }
+        socket.emit('turn', '0')
     })
 }
 
